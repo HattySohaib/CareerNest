@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Search, HelpCircle, Users, Briefcase } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Search,
+  HelpCircle,
+  Users,
+  Briefcase,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +47,8 @@ export default function FAQ() {
     {
       id: 4,
       category: "students",
-      question: "What kind of notifications or alerts will I receive as a student?",
+      question:
+        "What kind of notifications or alerts will I receive as a student?",
       answer:
         "You’ll receive real-time alerts for new matching internships, application status updates, upcoming interviews, and career webinars.",
     },
@@ -54,7 +62,8 @@ export default function FAQ() {
     {
       id: 6,
       category: "recruiters",
-      question: "How do I attract high-quality candidates to my internship listings?",
+      question:
+        "How do I attract high-quality candidates to my internship listings?",
       answer:
         "Write clear, detailed job descriptions and highlight learning opportunities or stipends.",
     },
@@ -110,7 +119,8 @@ export default function FAQ() {
   };
 
   const filteredFaqs = faqs.filter((faq) => {
-    const matchesCategory = activeCategory === "all" || faq.category === activeCategory;
+    const matchesCategory =
+      activeCategory === "all" || faq.category === activeCategory;
     const matchesSearch =
       searchTerm === "" ||
       faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -123,9 +133,12 @@ export default function FAQ() {
       {/* Header Section */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">Frequently Asked Questions</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Frequently Asked Questions
+          </h1>
           <p className="text-xl md:text-2xl text-purple-100 max-w-3xl mx-auto">
-            Find answers to common questions about using CareerNest for your career journey
+            Find answers to common questions about using CareerNest for your
+            career journey
           </p>
         </div>
       </section>
@@ -150,10 +163,11 @@ export default function FAQ() {
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-colors ${activeCategory === category.id
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                    }`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-colors ${
+                    activeCategory === category.id
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
+                  }`}
                 >
                   <IconComponent className="w-4 h-4" />
                   <span>{category.name}</span>
@@ -182,12 +196,17 @@ export default function FAQ() {
                   <div className="flex items-start space-x-3">
                     <Badge
                       variant="secondary"
-                      className={`mt-1 ${faq.category === "students" ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
-                        }`}
+                      className={`mt-1 ${
+                        faq.category === "students"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-blue-100 text-blue-800"
+                      }`}
                     >
                       {faq.category === "students" ? "Students" : "Recruiters"}
                     </Badge>
-                    <CardTitle className="text-left text-lg font-semibold text-gray-900">{faq.question}</CardTitle>
+                    <CardTitle className="text-left text-lg font-semibold text-gray-900">
+                      {faq.question}
+                    </CardTitle>
                   </div>
                   {openItems[faq.id] ? (
                     <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
@@ -200,7 +219,9 @@ export default function FAQ() {
               {openItems[faq.id] && (
                 <CardContent className="pt-0">
                   <div className="pl-20">
-                    <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </div>
                 </CardContent>
               )}
@@ -211,15 +232,21 @@ export default function FAQ() {
         {filteredFaqs.length === 0 && (
           <div className="text-center py-12">
             <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No questions found</h3>
-            <p className="text-gray-500">Try adjusting your search terms or browse different categories</p>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+              No questions found
+            </h3>
+            <p className="text-gray-500">
+              Try adjusting your search terms or browse different categories
+            </p>
           </div>
         )}
 
         {/* Contact Support */}
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-8 mt-12 text-white text-center">
           <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
-          <p className="text-blue-100 mb-6">Our support team is here to help you succeed in your career journey</p>
+          <p className="text-blue-100 mb-6">
+            Our support team is here to help you succeed in your career journey
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:support@careernest.in"
