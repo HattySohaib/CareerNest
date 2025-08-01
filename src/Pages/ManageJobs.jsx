@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash2, Plus } from "lucide-react";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { Link, useNavigate } from "react-router-dom";
-import JobDetailsModal from "../Components/jobs/JobDetailsModal";
+import JobDetailsModal from "../components/jobs/JobDetailsModal";
 import { ArrowLeft } from "lucide-react";
-import { useToast } from "@/Components/common/ToastContext";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function ManageJobs() {
   const [jobs, setJobs] = useState([]);
@@ -34,12 +34,15 @@ export default function ManageJobs() {
     setIsLoading(true);
     try {
       const jwt = localStorage.getItem("jwt");
-      const response = await fetch(`/api/jobs?posted_by=${encodeURIComponent(email)}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwt}`
+      const response = await fetch(
+        `/api/jobs?posted_by=${encodeURIComponent(email)}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
         }
-      });
+      );
       const data = await response.json();
       setJobs(data);
     } catch (error) {
@@ -51,7 +54,7 @@ export default function ManageJobs() {
 
   const handleDelete = async (jobId) => {
     // Only allow valid MongoDB ObjectId (24 hex chars)
-    if (!jobId || typeof jobId !== 'string' || jobId.length !== 24) {
+    if (!jobId || typeof jobId !== "string" || jobId.length !== 24) {
       showError("Invalid job ID. Cannot delete.");
       return;
     }
@@ -61,8 +64,8 @@ export default function ManageJobs() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwt}`
-        }
+          Authorization: `Bearer ${jwt}`,
+        },
       });
       if (res.ok) {
         setJobs((prev) => prev.filter((job) => job._id !== jobId));
@@ -99,18 +102,19 @@ export default function ManageJobs() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-8">
+        {/* ⬅️ Back Button */}
+        <button
+          onClick={handleGoBack}
+          className="flex items-center text-sm text-blue-600 hover:underline mb-4"
+        >
+          <ArrowLeft className="w-4 h-4 mr-1" />
+          Go Back
+        </button>
 
-         {/* ⬅️ Back Button */}
-      <button
-        onClick={handleGoBack}
-        className="flex items-center text-sm text-blue-600 hover:underline mb-4"
-      >
-        <ArrowLeft className="w-4 h-4 mr-1" />
-        Go Back
-      </button>
-      
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:text-left">Manage Jobs</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:text-left">
+            Manage Jobs
+          </h1>
           <Link to="/p/post-jobs">
             <Button className="bg-blue-500 hover:bg-blue-600 w-full sm:w-auto flex items-center justify-center">
               <Plus className="w-4 h-4 mr-2" />
@@ -131,13 +135,17 @@ export default function ManageJobs() {
                     className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg gap-4 sm:gap-0"
                   >
                     <div className="w-full sm:w-auto">
-                      <h3 className="font-semibold text-gray-900 text-lg">{job.title}</h3>
+                      <h3 className="font-semibold text-gray-900 text-lg">
+                        {job.title}
+                      </h3>
                       <p className="text-sm text-gray-600">
                         {job.location} • {job.job_type}
                       </p>
                       <Badge
                         className={
-                          job.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                          job.status === "active"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-gray-100 text-gray-800"
                         }
                       >
                         {job.status}
@@ -178,8 +186,12 @@ export default function ManageJobs() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">No jobs posted yet</h3>
-                <p className="text-gray-500 mb-4">Start by posting your first job to attract candidates</p>
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  No jobs posted yet
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Start by posting your first job to attract candidates
+                </p>
                 <Link to="/p/post-jobs">
                   <Button className="bg-blue-500 hover:bg-blue-600 w-full sm:w-auto flex items-center justify-center">
                     <Plus className="w-4 h-4 mr-2" />
@@ -190,7 +202,12 @@ export default function ManageJobs() {
             )}
           </CardContent>
         </Card>
-        {showDetails && <JobDetailsModal job={selectedJob} onClose={() => setShowDetails(false)} />}
+        {showDetails && (
+          <JobDetailsModal
+            job={selectedJob}
+            onClose={() => setShowDetails(false)}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { fetchInternshipsFromAPI, updateInternshipStatus } from "../Services/InternshipApi";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  fetchInternshipsFromAPI,
+  updateInternshipStatus,
+} from "../services/InternshipApi";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, CheckCircle, XCircle, Briefcase, Users, Settings } from "lucide-react";
+import {
+  Clock,
+  CheckCircle,
+  XCircle,
+  Briefcase,
+  Users,
+  Settings,
+} from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,21 +35,32 @@ export default function AdminPage() {
   const [internships, setInternships] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [internshipStats, setInternshipStats] = useState({ pending: 0, approved: 0, rejected: 0 });
-  const [jobStats, setJobStats] = useState({ pending: 0, approved: 0, rejected: 0 });
+  const [internshipStats, setInternshipStats] = useState({
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
+  const [jobStats, setJobStats] = useState({
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
   const [selectedInternship, setSelectedInternship] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isInternshipModalOpen, setIsInternshipModalOpen] = useState(false);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [adminData, setAdminData] = useState(null);
-  
+
   const navigate = useNavigate();
 
   const fetchInternships = async () => {
     try {
       const data = await fetchInternshipsFromAPI();
       if (!Array.isArray(data)) {
-        console.error('Failed to fetch internships: Response is not an array', data);
+        console.error(
+          "Failed to fetch internships: Response is not an array",
+          data
+        );
         setInternships([]);
         setInternshipStats({ pending: 0, approved: 0, rejected: 0 });
         return;
@@ -56,16 +83,22 @@ export default function AdminPage() {
       const adminToken = localStorage.getItem("admin-token");
       const response = await axios.get("/api/jobs/admin/all", {
         headers: {
-          'Authorization': `Bearer ${adminToken}`,
-          'x-admin-auth': 'true'
-        }
+          Authorization: `Bearer ${adminToken}`,
+          "x-admin-auth": "true",
+        },
       });
       const data = response.data;
       setJobs(data);
 
-      const pending = data.filter((j) => j.approval_status === "pending").length;
-      const approved = data.filter((j) => j.approval_status === "approved").length;
-      const rejected = data.filter((j) => j.approval_status === "rejected").length;
+      const pending = data.filter(
+        (j) => j.approval_status === "pending"
+      ).length;
+      const approved = data.filter(
+        (j) => j.approval_status === "approved"
+      ).length;
+      const rejected = data.filter(
+        (j) => j.approval_status === "rejected"
+      ).length;
       setJobStats({ pending, approved, rejected });
     } catch (error) {
       console.error("Failed to fetch jobs:", error);
@@ -81,7 +114,7 @@ export default function AdminPage() {
   useEffect(() => {
     const adminAuth = localStorage.getItem("admin-auth");
     const adminDataStr = localStorage.getItem("admin-data");
-    
+
     if (adminAuth === "true") {
       setIsAuthenticated(true);
       if (adminDataStr) {
@@ -100,15 +133,16 @@ export default function AdminPage() {
     try {
       const adminToken = localStorage.getItem("admin-token");
       const adminData = JSON.parse(localStorage.getItem("admin-data") || "{}");
-      
-      await axios.put(`/api/internships/${id}/approve`, 
+
+      await axios.put(
+        `/api/internships/${id}/approve`,
         { status, comments },
         {
           headers: {
-            'Authorization': `Bearer ${adminToken}`,
-            'x-admin-auth': 'true',
-            'x-admin-email': adminData.email || 'admin@careernest.com'
-          }
+            Authorization: `Bearer ${adminToken}`,
+            "x-admin-auth": "true",
+            "x-admin-email": adminData.email || "admin@careernest.com",
+          },
         }
       );
       await fetchInternships(); // refresh data after update
@@ -122,15 +156,16 @@ export default function AdminPage() {
     try {
       const adminToken = localStorage.getItem("admin-token");
       const adminData = JSON.parse(localStorage.getItem("admin-data") || "{}");
-      
-      await axios.put(`/api/jobs/${id}/approve`, 
+
+      await axios.put(
+        `/api/jobs/${id}/approve`,
         { approval_status, comments },
         {
           headers: {
-            'Authorization': `Bearer ${adminToken}`,
-            'x-admin-auth': 'true',
-            'x-admin-email': adminData.email || 'admin@careernest.com'
-          }
+            Authorization: `Bearer ${adminToken}`,
+            "x-admin-auth": "true",
+            "x-admin-email": adminData.email || "admin@careernest.com",
+          },
         }
       );
       await fetchJobs(); // refresh data after update
@@ -158,7 +193,9 @@ export default function AdminPage() {
     ...internship,
     id: internship._id,
     companyName: internship.company,
-    companyLogoUrl: internship.company_logo || `https://avatar.vercel.sh/${internship.company}.png`,
+    companyLogoUrl:
+      internship.company_logo ||
+      `https://avatar.vercel.sh/${internship.company}.png`,
     recruiterName: internship.posted_by,
   });
 
@@ -166,8 +203,12 @@ export default function AdminPage() {
     return <AdminAuth onLogin={() => setIsAuthenticated(true)} />;
   }
 
-  const filteredInternships = (status) => internships.filter((i) => i.status === status);
-  const filteredJobs = (status) => jobs.filter((j) => j.approval_status === status && j.job_type !== "Internship");
+  const filteredInternships = (status) =>
+    internships.filter((i) => i.status === status);
+  const filteredJobs = (status) =>
+    jobs.filter(
+      (j) => j.approval_status === status && j.job_type !== "Internship"
+    );
 
   // Only count jobs that are not internships for job stats
   const filteredJobsList = jobs.filter((j) => j.job_type !== "Internship");
@@ -196,10 +237,30 @@ export default function AdminPage() {
 
         {/* Overall Stat Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-          <StatCard title="Total Pending" value={totalPending} icon={Clock} color="text-yellow-500" />
-          <StatCard title="Total Approved" value={totalApproved} icon={CheckCircle} color="text-green-500" />
-          <StatCard title="Total Rejected" value={totalRejected} icon={XCircle} color="text-red-500" />
-          <StatCard title="Total Items" value={totalPending + totalApproved + totalRejected} icon={Briefcase} color="text-blue-500" />
+          <StatCard
+            title="Total Pending"
+            value={totalPending}
+            icon={Clock}
+            color="text-yellow-500"
+          />
+          <StatCard
+            title="Total Approved"
+            value={totalApproved}
+            icon={CheckCircle}
+            color="text-green-500"
+          />
+          <StatCard
+            title="Total Rejected"
+            value={totalRejected}
+            icon={XCircle}
+            color="text-red-500"
+          />
+          <StatCard
+            title="Total Items"
+            value={totalPending + totalApproved + totalRejected}
+            icon={Briefcase}
+            color="text-blue-500"
+          />
         </div>
 
         {/* Main Content Tabs */}
@@ -214,32 +275,46 @@ export default function AdminPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Internship Applications</CardTitle>
-                <CardDescription>Review, approve, or reject internship posts.</CardDescription>
+                <CardDescription>
+                  Review, approve, or reject internship posts.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="pending" className="w-full">
                   <TabsList className="mb-4">
-                    <TabsTrigger value="pending">Pending ({internshipStats.pending})</TabsTrigger>
-                    <TabsTrigger value="approved">Approved ({internshipStats.approved})</TabsTrigger>
-                    <TabsTrigger value="rejected">Rejected ({internshipStats.rejected})</TabsTrigger>
+                    <TabsTrigger value="pending">
+                      Pending ({internshipStats.pending})
+                    </TabsTrigger>
+                    <TabsTrigger value="approved">
+                      Approved ({internshipStats.approved})
+                    </TabsTrigger>
+                    <TabsTrigger value="rejected">
+                      Rejected ({internshipStats.rejected})
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="pending">
                     <InternshipTable
-                      internships={filteredInternships("pending").map(mapInternship)}
+                      internships={filteredInternships("pending").map(
+                        mapInternship
+                      )}
                       onStatusChange={handleInternshipStatusChange}
                       onViewDetails={handleViewInternshipDetails}
                     />
                   </TabsContent>
                   <TabsContent value="approved">
                     <InternshipTable
-                      internships={filteredInternships("approved").map(mapInternship)}
+                      internships={filteredInternships("approved").map(
+                        mapInternship
+                      )}
                       onStatusChange={handleInternshipStatusChange}
                       onViewDetails={handleViewInternshipDetails}
                     />
                   </TabsContent>
                   <TabsContent value="rejected">
                     <InternshipTable
-                      internships={filteredInternships("rejected").map(mapInternship)}
+                      internships={filteredInternships("rejected").map(
+                        mapInternship
+                      )}
                       onStatusChange={handleInternshipStatusChange}
                       onViewDetails={handleViewInternshipDetails}
                     />
@@ -254,14 +329,22 @@ export default function AdminPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Job Applications</CardTitle>
-                <CardDescription>Review, approve, or reject job posts.</CardDescription>
+                <CardDescription>
+                  Review, approve, or reject job posts.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="pending" className="w-full">
                   <TabsList className="mb-4">
-                    <TabsTrigger value="pending">Pending ({filteredJobStats.pending})</TabsTrigger>
-                    <TabsTrigger value="approved">Approved ({filteredJobStats.approved})</TabsTrigger>
-                    <TabsTrigger value="rejected">Rejected ({filteredJobStats.rejected})</TabsTrigger>
+                    <TabsTrigger value="pending">
+                      Pending ({filteredJobStats.pending})
+                    </TabsTrigger>
+                    <TabsTrigger value="approved">
+                      Approved ({filteredJobStats.approved})
+                    </TabsTrigger>
+                    <TabsTrigger value="rejected">
+                      Rejected ({filteredJobStats.rejected})
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="pending">
                     <JobTable
@@ -298,14 +381,13 @@ export default function AdminPage() {
         internship={selectedInternship}
         onStatusChange={handleInternshipStatusChange}
       />
-      
+
       <JobDetailsModal
         isOpen={isJobModalOpen}
         onOpenChange={setIsJobModalOpen}
         job={selectedJob}
         onStatusChange={handleJobStatusChange}
       />
-      
-     </div>
-   );
- }
+    </div>
+  );
+}

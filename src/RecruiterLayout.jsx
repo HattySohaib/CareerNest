@@ -20,7 +20,7 @@ import {
   Home,
 } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { createPageUrl } from "./Components/utils";
+import { createPageUrl } from "./components/utils";
 import { Button } from "@/components/ui/button";
 import UserProfileDropdown from "@/components/layout/UserProfileDropdown";
 
@@ -119,11 +119,16 @@ export default function RecruiterLayout({ children }) {
       <header className="bg-white shadow-sm border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between items-center h-16 gap-4">
-            <Link to={createPageUrl("Home")} className="flex items-center space-x-2">
+            <Link
+              to={createPageUrl("Home")}
+              className="flex items-center space-x-2"
+            >
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
                 <Briefcase className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">CareerNest</span>
+              <span className="text-xl font-bold text-gray-900">
+                CareerNest
+              </span>
             </Link>
 
             <nav className="hidden lg:flex flex-wrap gap-4">
@@ -146,12 +151,17 @@ export default function RecruiterLayout({ children }) {
               ) : (
                 <>
                   <Link to={createPageUrl("StudentAuth")}>
-                    <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                    <Button
+                      variant="outline"
+                      className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                    >
                       Student
                     </Button>
                   </Link>
                   <Link to={createPageUrl("RecruiterAuth")}>
-                    <Button className="bg-blue-600 hover:bg-blue-700">Recruiter</Button>
+                    <Button className="bg-blue-600 hover:bg-blue-700">
+                      Recruiter
+                    </Button>
                   </Link>
                 </>
               )}
@@ -161,7 +171,11 @@ export default function RecruiterLayout({ children }) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="sm:block lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -208,7 +222,10 @@ export default function RecruiterLayout({ children }) {
       {mobileMenuOpen && user && user.role === "recruiter" && (
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Click outside to close */}
-          <div className="fixed inset-0" onClick={() => setMobileMenuOpen(false)} />
+          <div
+            className="fixed inset-0"
+            onClick={() => setMobileMenuOpen(false)}
+          />
           {/* Sidebar */}
           <div
             className="fixed left-0 top-0 h-full w-3/4 max-w-sm bg-white shadow-xl overflow-hidden"
@@ -228,7 +245,9 @@ export default function RecruiterLayout({ children }) {
                       : "R"}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{user.full_name || user.name || "Recruiter"}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {user.full_name || user.name || "Recruiter"}
+                    </p>
                     <p className="text-xs text-gray-500">{user.email}</p>
                   </div>
                 </div>
@@ -237,7 +256,9 @@ export default function RecruiterLayout({ children }) {
                   className="p-1 hover:bg-gray-100 rounded"
                 >
                   <ChevronDown
-                    className={`w-4 h-4 text-gray-500 transition-transform ${moreDropdownOpen ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 text-gray-500 transition-transform ${
+                      moreDropdownOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
               </div>
@@ -247,7 +268,9 @@ export default function RecruiterLayout({ children }) {
                 <div className="mt-3 space-y-1">
                   {/* Your Profile Section */}
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("profile"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("profile"))
+                    }
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                   >
                     <User className="w-4 h-4 mr-3" />
@@ -258,7 +281,9 @@ export default function RecruiterLayout({ children }) {
 
                   {/* SUPPORT Section */}
                   <div className="px-4 py-1">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Support</p>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                      Support
+                    </p>
                   </div>
                   <button
                     onClick={() => handleNavigationClick(createPageUrl("help"))}
@@ -268,7 +293,9 @@ export default function RecruiterLayout({ children }) {
                     Help Center
                   </button>
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("contact"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("contact"))
+                    }
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                   >
                     <MessageCircle className="w-4 h-4 mr-3" />
@@ -279,17 +306,23 @@ export default function RecruiterLayout({ children }) {
 
                   {/* SETTINGS Section */}
                   <div className="px-4 py-1">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Settings</p>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                      Settings
+                    </p>
                   </div>
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("updateProfile"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("updateProfile"))
+                    }
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                   >
                     <User className="w-4 h-4 mr-3" />
                     Update Profile
                   </button>
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("settings"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("settings"))
+                    }
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                   >
                     <Settings className="w-4 h-4 mr-3" />
@@ -313,14 +346,18 @@ export default function RecruiterLayout({ children }) {
                 <button
                   onClick={() => handleNavigationClick(createPageUrl("Home"))}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                    isActive(createPageUrl("Home")) ? "text-blue-600 bg-blue-50" : "text-gray-900 hover:bg-gray-100"
+                    isActive(createPageUrl("Home"))
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-900 hover:bg-gray-100"
                   }`}
                 >
                   <Home className="w-4 h-4 mr-3 inline" />
                   Home
                 </button>
                 <button
-                  onClick={() => handleNavigationClick(createPageUrl("recruiterdashboard"))}
+                  onClick={() =>
+                    handleNavigationClick(createPageUrl("recruiterdashboard"))
+                  }
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     isActive(createPageUrl("recruiterdashboard"))
                       ? "text-blue-600 bg-blue-50"
@@ -342,7 +379,9 @@ export default function RecruiterLayout({ children }) {
                     Post Jobs
                   </button> */}
                 <button
-                  onClick={() => handleNavigationClick(createPageUrl("manage-jobs"))}
+                  onClick={() =>
+                    handleNavigationClick(createPageUrl("manage-jobs"))
+                  }
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     isActive(createPageUrl("manage-jobs"))
                       ? "text-blue-600 bg-blue-50"
@@ -353,7 +392,9 @@ export default function RecruiterLayout({ children }) {
                   Manage Jobs
                 </button>
                 <button
-                  onClick={() => handleNavigationClick(createPageUrl("manage-internships"))}
+                  onClick={() =>
+                    handleNavigationClick(createPageUrl("manage-internships"))
+                  }
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     isActive(createPageUrl("manage-internships"))
                       ? "text-blue-600 bg-blue-50"
@@ -364,7 +405,9 @@ export default function RecruiterLayout({ children }) {
                   Manage Internships
                 </button>
                 <button
-                  onClick={() => handleNavigationClick(createPageUrl("job-applications"))}
+                  onClick={() =>
+                    handleNavigationClick(createPageUrl("job-applications"))
+                  }
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     isActive(createPageUrl("job-applications"))
                       ? "text-blue-600 bg-blue-50"
@@ -375,7 +418,9 @@ export default function RecruiterLayout({ children }) {
                   Applications
                 </button>
                 <button
-                  onClick={() => handleNavigationClick(createPageUrl("analytics"))}
+                  onClick={() =>
+                    handleNavigationClick(createPageUrl("analytics"))
+                  }
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                     isActive(createPageUrl("analytics"))
                       ? "text-blue-600 bg-blue-50"
@@ -406,7 +451,9 @@ export default function RecruiterLayout({ children }) {
                 key={item.name}
                 to={item.href}
                 className={`block bg-white hover:bg-blue-100 p-4 rounded-xl border-l-4 shadow-sm transition-colors duration-200 ${
-                  isActive(item.href) ? "border-blue-500 bg-blue-50" : "border-transparent hover:border-blue-300"
+                  isActive(item.href)
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-transparent hover:border-blue-300"
                 }`}
               >
                 {item.name}

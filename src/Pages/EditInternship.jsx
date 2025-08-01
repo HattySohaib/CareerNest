@@ -3,9 +3,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
-import { useToast } from "@/Components/common/ToastContext";
+import { useToast } from "@/components/common/ToastContext";
 
-const locations = ["Noida", "Delhi", "Pune", "Mumbai", "Bangalore", "Hyderabad"];
+const locations = [
+  "Noida",
+  "Delhi",
+  "Pune",
+  "Mumbai",
+  "Bangalore",
+  "Hyderabad",
+];
 const durations = ["1 month", "2 months", "3 months", "6 months", "1 year"];
 
 export default function EditInternship() {
@@ -73,11 +80,14 @@ export default function EditInternship() {
     }
   };
 
-  if (isLoading || !form) return <div className="p-8 text-center">Loading...</div>;
+  if (isLoading || !form)
+    return <div className="p-8 text-center">Loading...</div>;
 
   return (
     <div className="max-w-3xl mx-auto p-6 w-full sm:p-8 md:p-10 lg:p-12">
-      <h2 className="text-2xl font-bold mb-6 text-center sm:text-left">Edit Internship</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center sm:text-left">
+        Edit Internship
+      </h2>
       {success && (
         <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded text-center">
           Internship updated successfully!
@@ -88,7 +98,14 @@ export default function EditInternship() {
           <label htmlFor="title" className="block mb-1 font-medium">
             Internship Title
           </label>
-          <Input id="title" name="title" value={form.title} onChange={handleChange} required className="w-full" />
+          <Input
+            id="title"
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            required
+            className="w-full"
+          />
         </div>
         {/* Responsive grid for location and stipend fields */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -183,7 +200,11 @@ export default function EditInternship() {
             <Input
               id="requirements"
               name="requirements"
-              value={Array.isArray(form.requirements) ? form.requirements.join(", ") : form.requirements}
+              value={
+                Array.isArray(form.requirements)
+                  ? form.requirements.join(", ")
+                  : form.requirements
+              }
               onChange={(e) => handleArrayChange(e, "requirements")}
               className="w-full"
             />
@@ -195,7 +216,11 @@ export default function EditInternship() {
             <Input
               id="skills"
               name="skills"
-              value={Array.isArray(form.skills) ? form.skills.join(", ") : form.skills}
+              value={
+                Array.isArray(form.skills)
+                  ? form.skills.join(", ")
+                  : form.skills
+              }
               onChange={(e) => handleArrayChange(e, "skills")}
               className="w-full"
             />
@@ -208,7 +233,11 @@ export default function EditInternship() {
           <Input
             id="benefits"
             name="benefits"
-            value={Array.isArray(form.benefits) ? form.benefits.join(", ") : form.benefits}
+            value={
+              Array.isArray(form.benefits)
+                ? form.benefits.join(", ")
+                : form.benefits
+            }
             onChange={(e) => handleArrayChange(e, "benefits")}
             className="w-full"
           />
@@ -219,14 +248,19 @@ export default function EditInternship() {
             name="remote_option"
             type="checkbox"
             checked={form.remote_option}
-            onChange={(e) => setForm((prev) => ({ ...prev, remote_option: e.target.checked }))}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, remote_option: e.target.checked }))
+            }
             className="h-4 w-4"
           />
           <label htmlFor="remote_option" className="font-medium">
             Remote Option Available
           </label>
         </div>
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
+        <Button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+        >
           Update Internship
         </Button>
       </form>

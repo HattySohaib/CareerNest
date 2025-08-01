@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
-import ApplicationApi from "../Services/ApplicationApi";
-import { fetchInternshipsFromAPI } from "../Services/InternshipApi";
+import ApplicationApi from "../services/ApplicationApi";
+import { fetchInternshipsFromAPI } from "../services/InternshipApi";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,9 +17,9 @@ import {
 
 // Reverse status mapping for display
 const reverseStatusMapping = {
-  'reviewed': 'reviewing',
-  'shortlisted': 'interviewed',
-  'hired': 'accepted'
+  reviewed: "reviewing",
+  shortlisted: "interviewed",
+  hired: "accepted",
 };
 
 export default function ApplicationsPage() {
@@ -51,65 +50,89 @@ export default function ApplicationsPage() {
     setIsLoading(true);
     try {
       console.log("Fetching applications...");
-      
+
       // Fetch both regular applications and internships
       const [regularApplications, internshipData] = await Promise.all([
-        ApplicationApi.list().catch(error => {
+        ApplicationApi.list().catch((error) => {
           console.error("Error fetching regular applications:", error);
           return [];
         }),
-        fetchInternshipsFromAPI().catch(error => {
+        fetchInternshipsFromAPI().catch((error) => {
           console.error("Error fetching internships:", error);
           return [];
-        })
+        }),
       ]);
 
       console.log("Regular applications:", regularApplications);
       console.log("Internship data:", internshipData);
 
       // Transform regular applications to match expected format
-      const transformedRegularApplications = (regularApplications || []).map(app => ({
-        id: app._id,
-        student_name: app.applicant_name,
-        position_title: app.job_id?.title || app.internship_id?.title || 'Unknown Position',
-        position_type: app.application_type === 'internship' ? 'internship' : 'job',
-        status: mapStatusForDisplay(app.status || 'pending'),
-        created_date: app.created_date || app.createdAt,
-        company_name: app.company_name || app.job_id?.company || app.internship_id?.company,
-        email: app.applicant_email,
-        phone: app.phone,
-        resume_url: app.resume_url,
-        cover_letter: app.cover_letter,
-        // Add any other fields that need mapping
-        ...app
-      }));
+      const transformedRegularApplications = (regularApplications || []).map(
+        (app) => ({
+          id: app._id,
+          student_name: app.applicant_name,
+          position_title:
+            app.job_id?.title || app.internship_id?.title || "Unknown Position",
+          position_type:
+            app.application_type === "internship" ? "internship" : "job",
+          status: mapStatusForDisplay(app.status || "pending"),
+          created_date: app.created_date || app.createdAt,
+          company_name:
+            app.company_name ||
+            app.job_id?.company ||
+            app.internship_id?.company,
+          email: app.applicant_email,
+          phone: app.phone,
+          resume_url: app.resume_url,
+          cover_letter: app.cover_letter,
+          // Add any other fields that need mapping
+          ...app,
+        })
+      );
 
       // Transform internship data to match application format
       // internshipData is already an array, not wrapped in an internships object
-      const transformedInternships = (internshipData || []).map(internship => ({
-        id: internship._id,
-        student_name: internship.student_name || internship.applicant_name || internship.posted_by,
-        position_title: internship.position_title || internship.job_title || internship.title,
-        position_type: "internship",
-        status: mapStatusForDisplay(internship.status || "pending"),
-        created_date: internship.createdAt || internship.created_date || internship.postedAt,
-        company_name: internship.company_name || internship.company,
-        email: internship.email,
-        phone: internship.phone,
-        resume_url: internship.resume_url,
-        cover_letter: internship.cover_letter,
-        // Add any other fields that need mapping
-        ...internship
-      }));
+      const transformedInternships = (internshipData || []).map(
+        (internship) => ({
+          id: internship._id,
+          student_name:
+            internship.student_name ||
+            internship.applicant_name ||
+            internship.posted_by,
+          position_title:
+            internship.position_title ||
+            internship.job_title ||
+            internship.title,
+          position_type: "internship",
+          status: mapStatusForDisplay(internship.status || "pending"),
+          created_date:
+            internship.createdAt ||
+            internship.created_date ||
+            internship.postedAt,
+          company_name: internship.company_name || internship.company,
+          email: internship.email,
+          phone: internship.phone,
+          resume_url: internship.resume_url,
+          cover_letter: internship.cover_letter,
+          // Add any other fields that need mapping
+          ...internship,
+        })
+      );
 
-      console.log("Transformed regular applications:", transformedRegularApplications);
+      console.log(
+        "Transformed regular applications:",
+        transformedRegularApplications
+      );
       console.log("Transformed internships:", transformedInternships);
 
       // Combine both types of applications
-      const allApplications = [...transformedRegularApplications, ...transformedInternships];
-      
+      const allApplications = [
+        ...transformedRegularApplications,
+        ...transformedInternships,
+      ];
+
       console.log("All applications combined:", allApplications);
-      
+
       // Sort by creation date (newest first)
       const sortedApplications = allApplications.sort((a, b) => {
         const dateA = new Date(a.created_date || a.createdAt);
@@ -129,10 +152,17 @@ export default function ApplicationsPage() {
     let filtered = [...applications];
 
     if (searchTerm) {
-      filtered = filtered.filter((app) =>
-        (app.student_name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (app.position_title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (app.company_name || "").toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (app) =>
+          (app.student_name || "")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          (app.position_title || "")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          (app.company_name || "")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
       );
     }
 
@@ -150,11 +180,13 @@ export default function ApplicationsPage() {
   const handleStatusUpdate = async (applicationId, newStatus) => {
     try {
       // Determine if it's a regular application or internship
-      const application = applications.find(app => app.id === applicationId);
-      
+      const application = applications.find((app) => app.id === applicationId);
+
       if (application.position_type === "internship") {
         // Update internship status using InternshipApi
-        const { updateInternshipStatus } = await import("../Services/InternshipApi");
+        const { updateInternshipStatus } = await import(
+          "../services/InternshipApi"
+        );
         await updateInternshipStatus(applicationId, newStatus);
       } else {
         // Update regular application status
@@ -191,16 +223,18 @@ export default function ApplicationsPage() {
     setIsLoading(true);
     try {
       const updates = selectedIds.map(async (id) => {
-        const application = applications.find(app => app.id === id);
-        
+        const application = applications.find((app) => app.id === id);
+
         if (application.position_type === "internship") {
-          const { updateInternshipStatus } = await import("../Services/InternshipApi");
+          const { updateInternshipStatus } = await import(
+            "../services/InternshipApi"
+          );
           return updateInternshipStatus(id, status);
         } else {
           return ApplicationApi.update(id, { status });
         }
       });
-      
+
       await Promise.all(updates);
       setSelectedIds([]);
       await loadApplications();
@@ -215,7 +249,9 @@ export default function ApplicationsPage() {
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Applications</h1>
-          <p className="text-gray-600 mt-1">Manage and review student applications</p>
+          <p className="text-gray-600 mt-1">
+            Manage and review student applications
+          </p>
         </div>
 
         <Card className="mb-6">

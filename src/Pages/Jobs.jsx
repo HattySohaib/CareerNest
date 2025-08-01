@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from "react";
 // import { Job } from "../Entities/Job.json";
 import { Link } from "react-router-dom";
-import { createPageUrl } from "../Components/utils";
+import { createPageUrl } from "../components/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin, Briefcase, Clock, IndianRupee, Filter, Building, GraduationCap, Calendar } from "lucide-react";
-import JobCard from "../Components/jobs/JobCard";
-import LoadingSpinner from "../Components/common/LoadingSpinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  Clock,
+  IndianRupee,
+  Filter,
+  Building,
+  GraduationCap,
+  Calendar,
+} from "lucide-react";
+import JobCard from "../components/jobs/JobCard";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -31,29 +47,35 @@ export default function Jobs() {
     filterJobs();
   }, [jobs, searchTerm, locationFilter, jobTypeFilter, experienceFilter]);
 
-    const loadJobs = async () => {
+  const loadJobs = async () => {
     try {
-      const response = await fetch('/api/jobs', {
+      const response = await fetch("/api/jobs", {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const data = await response.json();
-      
+
       // Check if user is a recruiter
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       const isRecruiter = user.role === "recruiter";
-      
+
       if (isRecruiter) {
         // For recruiters, show all their jobs (approved, pending, rejected)
-        const recruiterJobs = (Array.isArray(data) ? data : []).filter(job => job.posted_by === user.email);
+        const recruiterJobs = (Array.isArray(data) ? data : []).filter(
+          (job) => job.posted_by === user.email
+        );
         setJobs(recruiterJobs);
       } else {
         // For students, only show approved jobs
-        setJobs((Array.isArray(data) ? data : []).filter(job => job.approval_status === 'approved'));
+        setJobs(
+          (Array.isArray(data) ? data : []).filter(
+            (job) => job.approval_status === "approved"
+          )
+        );
       }
     } catch (error) {
-      console.error('Error loading jobs:', error);
+      console.error("Error loading jobs:", error);
     } finally {
       setIsLoading(false);
     }
@@ -63,22 +85,25 @@ export default function Jobs() {
     let filtered = jobs;
 
     if (searchTerm) {
-      filtered = filtered.filter(job =>
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.company.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (job) =>
+          job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          job.company.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (locationFilter !== "all") {
-      filtered = filtered.filter(job => job.location === locationFilter);
+      filtered = filtered.filter((job) => job.location === locationFilter);
     }
 
     if (jobTypeFilter !== "all") {
-      filtered = filtered.filter(job => job.job_type === jobTypeFilter);
+      filtered = filtered.filter((job) => job.job_type === jobTypeFilter);
     }
 
     if (experienceFilter !== "all") {
-      filtered = filtered.filter(job => job.experience_level === experienceFilter);
+      filtered = filtered.filter(
+        (job) => job.experience_level === experienceFilter
+      );
     }
 
     setFilteredJobs(filtered);
@@ -100,7 +125,7 @@ export default function Jobs() {
             <p className="text-xl text-blue-100 mb-8">
               Currently {jobs.length}+ opportunities available
             </p>
-             <div className="flex items-center justify-center space-x-6 text-green-100">
+            <div className="flex items-center justify-center space-x-6 text-green-100">
               <div className="flex items-center space-x-2">
                 <GraduationCap className="w-5 h-5" />
                 <span>Student Friendly</span>
@@ -124,8 +149,16 @@ export default function Jobs() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-blue-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
@@ -133,8 +166,13 @@ export default function Jobs() {
                   Recruiter Dashboard
                 </h3>
                 <div className="mt-2 text-sm text-blue-700">
-                  <p>You can see all your posted jobs here, including pending, approved, and rejected ones.</p>
-                  <p className="mt-1">Only approved jobs are visible to students.</p>
+                  <p>
+                    You can see all your posted jobs here, including pending,
+                    approved, and rejected ones.
+                  </p>
+                  <p className="mt-1">
+                    Only approved jobs are visible to students.
+                  </p>
                 </div>
               </div>
             </div>
@@ -153,7 +191,7 @@ export default function Jobs() {
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={locationFilter} onValueChange={setLocationFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="Location" />
@@ -181,7 +219,10 @@ export default function Jobs() {
               </SelectContent>
             </Select>
 
-            <Select value={experienceFilter} onValueChange={setExperienceFilter}>
+            <Select
+              value={experienceFilter}
+              onValueChange={setExperienceFilter}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Experience" />
               </SelectTrigger>
@@ -223,14 +264,22 @@ export default function Jobs() {
         <div className="grid gap-6">
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job) => (
-              <JobCard key={job._id} job={job} isInternship={job.job_type === 'Internship' || !!job.stipend} />
+              <JobCard
+                key={job._id}
+                job={job}
+                isInternship={job.job_type === "Internship" || !!job.stipend}
+              />
             ))
           ) : (
             <div className="text-center py-12">
               <Briefcase className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">No jobs found</h3>
-              <p className="text-gray-500">Try adjusting your filters or search terms</p>
-              <Button 
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                No jobs found
+              </h3>
+              <p className="text-gray-500">
+                Try adjusting your filters or search terms
+              </p>
+              <Button
                 onClick={() => {
                   setSearchTerm("");
                   setLocationFilter("all");

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ApplicationApi from "../../Services/ApplicationApi";
-import UserApi from "../../Services/UserApi";
+import ApplicationApi from "../../services/ApplicationApi";
+import UserApi from "../../services/UserApi";
 // import { UploadFile } from "@/integrations/Core";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
         if (!user?.email) return;
         setIsChecking(false);
       } catch (error) {
-        console.error('Error initializing form:', error);
+        console.error("Error initializing form:", error);
         setIsChecking(false);
       }
     }
@@ -58,17 +58,22 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
     return (
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Apply for {job.title}</CardTitle>
+          <CardTitle className="text-2xl text-center">
+            Apply for {job.title}
+          </CardTitle>
           <p className="text-center text-gray-600">
             at {job.company} • {job.location}
           </p>
         </CardHeader>
         <CardContent>
           <div className="text-center text-red-600 mb-4 font-semibold">
-            You must be logged in as a student to apply for this {isInternship ? 'internship' : 'job'}.
+            You must be logged in as a student to apply for this{" "}
+            {isInternship ? "internship" : "job"}.
           </div>
           <div className="flex justify-center">
-            <Button onClick={() => navigate("/p/studentauth")}>Login as Student</Button>
+            <Button onClick={() => navigate("/p/studentauth")}>
+              Login as Student
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -106,9 +111,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
     setIsSubmitting(true);
 
     try {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem("user"));
       if (!user || !user.email) {
-        throw new Error('Please log in to apply');
+        throw new Error("Please log in to apply");
       }
 
       const applicationData = {
@@ -118,32 +123,40 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
         experience: formData.experience,
         cover_letter: formData.cover_letter,
         resume_url: formData.resume_url,
-        application_type: isInternship ? 'internship' : 'job',
-        [isInternship ? 'internship_id' : 'job_id']: job.id || job._id
+        application_type: isInternship ? "internship" : "job",
+        [isInternship ? "internship_id" : "job_id"]: job.id || job._id,
       };
 
       // Create the application directly
       await ApplicationApi.create(applicationData);
 
-      onSuccess(`${isInternship ? 'Internship' : 'Job'} application submitted successfully!`);
-      
+      onSuccess(
+        `${
+          isInternship ? "Internship" : "Job"
+        } application submitted successfully!`
+      );
+
       // Show success message
-      onSuccess(`${isInternship ? 'Internship' : 'Job'} application submitted successfully!`);
-      
+      onSuccess(
+        `${
+          isInternship ? "Internship" : "Job"
+        } application submitted successfully!`
+      );
+
       // Close the form
       onClose();
-      
+
       // Navigate to My Applications
       try {
         // Ensure we're properly wrapped in StudentLayout
-        navigate('/p/applications', { 
+        navigate("/p/applications", {
           replace: true,
-          state: { from: 'application' }
+          state: { from: "application" },
         });
       } catch (error) {
-        console.error('Navigation error:', error);
+        console.error("Navigation error:", error);
         // Fallback navigation
-        window.location.href = '/p/applications';
+        window.location.href = "/p/applications";
       }
     } catch (error) {
       console.error("Error submitting application:", error);
@@ -161,7 +174,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">Apply for {job.title}</CardTitle>
+        <CardTitle className="text-2xl text-center">
+          Apply for {job.title}
+        </CardTitle>
         <p className="text-center text-gray-600">
           at {job.company} • {job.location}
           {isInternship && job.duration && ` • ${job.duration}`}
@@ -172,7 +187,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name *
+              </label>
               <Input
                 name="applicant_name"
                 value={formData.applicant_name}
@@ -182,7 +199,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address *
+              </label>
               <Input
                 name="applicant_email"
                 type="email"
@@ -196,7 +215,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Phone Number
+              </label>
               <Input
                 name="phone"
                 value={formData.phone}
@@ -206,38 +227,47 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {isInternship ? 'Relevant Experience' : 'Years of Experience'}
+                {isInternship ? "Relevant Experience" : "Years of Experience"}
               </label>
               <Input
                 name="experience"
                 value={formData.experience}
                 onChange={handleInputChange}
-                placeholder={isInternship ? "Projects, coursework, etc." : "e.g., 3 years"}
+                placeholder={
+                  isInternship ? "Projects, coursework, etc." : "e.g., 3 years"
+                }
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Cover Letter *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Cover Letter *
+            </label>
             <Textarea
               name="cover_letter"
               value={formData.cover_letter}
               onChange={handleInputChange}
-              placeholder={`Tell us why you're interested in this ${isInternship ? 'internship' : 'position'} and what makes you a great candidate...`}
+              placeholder={`Tell us why you're interested in this ${
+                isInternship ? "internship" : "position"
+              } and what makes you a great candidate...`}
               rows={6}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Resume</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Resume
+            </label>
             <input
-            required
-            type="text" name="resume_url"
-            value={formData.resume_url}
-            onChange={handleInputChange}
-            placeholder="Paste your resume link here"
-            className=" block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              required
+              type="text"
+              name="resume_url"
+              value={formData.resume_url}
+              onChange={handleInputChange}
+              placeholder="Paste your resume link here"
+              className=" block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -250,7 +280,9 @@ export default function ApplicationForm({ job, onClose, onSuccess }) {
               disabled={isSubmitting}
               className="bg-blue-500 hover:bg-blue-600"
             >
-              {isSubmitting ? "Submitting..." : `Submit ${isInternship ? 'Internship' : 'Job'} Application`}
+              {isSubmitting
+                ? "Submitting..."
+                : `Submit ${isInternship ? "Internship" : "Job"} Application`}
             </Button>
           </div>
         </form>

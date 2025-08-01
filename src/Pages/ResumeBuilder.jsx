@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Button } from "../Components/ui/button";
-import { Input } from "../Components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../Components/ui/select";
-import { useToast } from "@/Components/common/ToastContext";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function ResumeBuilder() {
   const { showSuccess } = useToast();
@@ -48,25 +54,59 @@ export default function ResumeBuilder() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-blue-100 py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl p-8 font-sans">
-        <h1 className="text-3xl font-bold text-center text-blue-800 mb-8">🎓 Resume Builder</h1>
+        <h1 className="text-3xl font-bold text-center text-blue-800 mb-8">
+          🎓 Resume Builder
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input name="name" value={form.name} onChange={handleChange} placeholder="Full Name" />
-            <Input name="email" value={form.email} onChange={handleChange} placeholder="Email" />
-            <Input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number" />
-            <Input name="address" value={form.address} onChange={handleChange} placeholder="Address" />
+            <Input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Full Name"
+            />
+            <Input
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <Input
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Phone Number"
+            />
+            <Input
+              name="address"
+              value={form.address}
+              onChange={handleChange}
+              placeholder="Address"
+            />
           </div>
 
           {/* Dropdowns */}
 
           <div>
-            <label className="block font-semibold mb-1 text-blue-700">College</label>
-            <Input name="college" value={form.collegeName} onChange={handleChange} placeholder="College Name" />
+            <label className="block font-semibold mb-1 text-blue-700">
+              College
+            </label>
+            <Input
+              name="college"
+              value={form.collegeName}
+              onChange={handleChange}
+              placeholder="College Name"
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select name="programme" value={form.passingYear} onChange={handleChange} className="input">
+            <Select
+              name="programme"
+              value={form.passingYear}
+              onChange={handleChange}
+              className="input"
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Passout" />
               </SelectTrigger>
@@ -81,23 +121,37 @@ export default function ResumeBuilder() {
               </SelectContent>
             </Select>
 
-            <Select name="branch" value={form.branch} onChange={handleChange} className="input">
+            <Select
+              name="branch"
+              value={form.branch}
+              onChange={handleChange}
+              className="input"
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Branch" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="select">Select Branch</SelectItem>
-                <SelectItem value="CSE">Computer Science & Engineering</SelectItem>
+                <SelectItem value="CSE">
+                  Computer Science & Engineering
+                </SelectItem>
                 <SelectItem value="IT">Information Technology</SelectItem>
                 <SelectItem value="ECE">Electronics & Communication</SelectItem>
                 <SelectItem value="ME">Mechanical Engineering</SelectItem>
                 <SelectItem value="EE">Electrical Engineering</SelectItem>
                 <SelectItem value="CE">Civil Engineering</SelectItem>
-                <SelectItem value="ICE">Instumentation and Control Engineering</SelectItem>
+                <SelectItem value="ICE">
+                  Instumentation and Control Engineering
+                </SelectItem>
               </SelectContent>
             </Select>
 
-            <Select name="passingYear" value={form.programme} onChange={handleChange} className="input">
+            <Select
+              name="passingYear"
+              value={form.programme}
+              onChange={handleChange}
+              className="input"
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Programme" />
               </SelectTrigger>
@@ -129,7 +183,9 @@ export default function ResumeBuilder() {
 
           {/* Skills */}
           <div>
-            <label className="block font-semibold mb-1 text-blue-700">Skills</label>
+            <label className="block font-semibold mb-1 text-blue-700">
+              Skills
+            </label>
             <Input
               name="skills"
               value={form.skills}
@@ -141,44 +197,74 @@ export default function ResumeBuilder() {
 
           {/* Projects */}
           <div>
-            <label className="block font-semibold mb-1 text-blue-700">Projects</label>
+            <label className="block font-semibold mb-1 text-blue-700">
+              Projects
+            </label>
             {form.projects.map((proj, idx) => (
               <div key={idx} className="grid grid-cols-2 gap-2 mb-2">
                 <Input
                   value={proj.title}
-                  onChange={(e) => handleNestedChange("projects", idx, "title", e.target.value)}
+                  onChange={(e) =>
+                    handleNestedChange("projects", idx, "title", e.target.value)
+                  }
                   placeholder="Project Title"
                 />
                 <Input
                   value={proj.link}
-                  onChange={(e) => handleNestedChange("projects", idx, "link", e.target.value)}
+                  onChange={(e) =>
+                    handleNestedChange("projects", idx, "link", e.target.value)
+                  }
                   placeholder="Project Link"
                 />
               </div>
             ))}
-            <Button type="button" onClick={() => addField("projects")} className="text-white text-sm">
+            <Button
+              type="button"
+              onClick={() => addField("projects")}
+              className="text-white text-sm"
+            >
               + Add another project
             </Button>
           </div>
 
           {/* Certifications */}
           <div>
-            <label className="block font-semibold mb-1 text-blue-700">Certifications</label>
+            <label className="block font-semibold mb-1 text-blue-700">
+              Certifications
+            </label>
             {form.certifications.map((cert, idx) => (
               <div key={idx} className="grid grid-cols-2 gap-2 mb-2">
                 <Input
                   value={cert.title}
-                  onChange={(e) => handleNestedChange("certifications", idx, "title", e.target.value)}
+                  onChange={(e) =>
+                    handleNestedChange(
+                      "certifications",
+                      idx,
+                      "title",
+                      e.target.value
+                    )
+                  }
                   placeholder="Certificate Title"
                 />
                 <Input
                   value={cert.link}
-                  onChange={(e) => handleNestedChange("certifications", idx, "link", e.target.value)}
+                  onChange={(e) =>
+                    handleNestedChange(
+                      "certifications",
+                      idx,
+                      "link",
+                      e.target.value
+                    )
+                  }
                   placeholder="Certificate Link"
                 />
               </div>
             ))}
-            <Button type="button" onClick={() => addField("certifications")} className="text-white text-sm">
+            <Button
+              type="button"
+              onClick={() => addField("certifications")}
+              className="text-white text-sm"
+            >
               + Add another certification
             </Button>
           </div>

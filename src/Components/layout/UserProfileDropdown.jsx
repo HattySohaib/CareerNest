@@ -10,8 +10,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User as UserIcon, Settings, HelpCircle, Mail, Shield, Key, Trash2, LogOut, ChevronDown, FileText, UploadCloud } from "lucide-react";
-import { useToast } from "@/Components/common/ToastContext";
+import {
+  User as UserIcon,
+  Settings,
+  HelpCircle,
+  Mail,
+  Shield,
+  Key,
+  Trash2,
+  LogOut,
+  ChevronDown,
+  FileText,
+  UploadCloud,
+} from "lucide-react";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function UserProfileDropdown({ user, onLogout }) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -22,17 +34,17 @@ export default function UserProfileDropdown({ user, onLogout }) {
     setIsLoggingOut(true);
     try {
       // Clear JWT from localStorage
-      localStorage.removeItem('jwt');
+      localStorage.removeItem("jwt");
       // Clear any other user data
-      localStorage.removeItem('user');
-      
+      localStorage.removeItem("user");
+
       // Call the onLogout callback to refresh parent state immediately
       if (onLogout) {
         onLogout();
       }
-      
+
       // Redirect to home page
-      navigate('/p/home');
+      navigate("/p/home");
     } catch (error) {
       console.error("Error logging out:", error);
       // Still call onLogout to refresh state even if logout fails
@@ -56,7 +68,9 @@ export default function UserProfileDropdown({ user, onLogout }) {
 
   const handleDeleteAccount = () => {
     // In a real app, this would open a confirmation modal
-    const confirmed = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    const confirmed = confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
     if (confirmed) {
       showInfo("Account deletion functionality would be implemented here");
     }
@@ -77,18 +91,26 @@ export default function UserProfileDropdown({ user, onLogout }) {
   };
 
   const isStudent = user.role === "student" || user.user_type === "student";
-  const isRecruiter = user.role === "recruiter" || user.user_type === "recruiter";
+  const isRecruiter =
+    user.role === "recruiter" || user.user_type === "recruiter";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="flex items-center space-x-2 p-2 hover:bg-gray-100">
+        <Button
+          variant="ghost"
+          className="flex items-center space-x-2 p-2 hover:bg-gray-100"
+        >
           <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
             {getUserInitials(user.full_name || user.name)}
           </div>
           <div className="hidden md:flex flex-col items-start">
-            <span className="text-sm font-medium text-gray-900">{user.full_name || user.name || "User"}</span>
-            <span className="text-xs text-gray-500">{isStudent ? "Student" : isRecruiter ? "Recruiter" : "User"}</span>
+            <span className="text-sm font-medium text-gray-900">
+              {user.full_name || user.name || "User"}
+            </span>
+            <span className="text-xs text-gray-500">
+              {isStudent ? "Student" : isRecruiter ? "Recruiter" : "User"}
+            </span>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-400" />
         </Button>
@@ -97,7 +119,9 @@ export default function UserProfileDropdown({ user, onLogout }) {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium text-gray-900">{user.full_name || user.name || "User"}</p>
+            <p className="text-sm font-medium text-gray-900">
+              {user.full_name || user.name || "User"}
+            </p>
             <p className="text-xs text-gray-500">{user.email}</p>
           </div>
         </DropdownMenuLabel>
@@ -106,7 +130,9 @@ export default function UserProfileDropdown({ user, onLogout }) {
 
         <DropdownMenuItem asChild>
           <Link
-            to={createPageUrl(isRecruiter ? "recruiterprofileview" : "profileview")}
+            to={createPageUrl(
+              isRecruiter ? "recruiterprofileview" : "profileview"
+            )}
             className="flex items-center"
           >
             <UserIcon className="w-4 h-4 mr-2" />
@@ -116,7 +142,9 @@ export default function UserProfileDropdown({ user, onLogout }) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuLabel className="text-xs text-gray-500 font-normal">SUPPORT</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-xs text-gray-500 font-normal">
+          SUPPORT
+        </DropdownMenuLabel>
 
         <DropdownMenuItem asChild>
           <Link to={createPageUrl("FAQ")} className="flex items-center">
@@ -136,17 +164,29 @@ export default function UserProfileDropdown({ user, onLogout }) {
 
         {isStudent || isRecruiter ? (
           <>
-            <DropdownMenuLabel className="text-xs text-gray-500 font-normal">SETTINGS</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-xs text-gray-500 font-normal">
+              SETTINGS
+            </DropdownMenuLabel>
 
             <DropdownMenuItem asChild>
-              <Link to={createPageUrl(isRecruiter ? "updateprofile" : "updateprofile")} className="flex items-center">
+              <Link
+                to={createPageUrl(
+                  isRecruiter ? "updateprofile" : "updateprofile"
+                )}
+                className="flex items-center"
+              >
                 <UserIcon className="w-4 h-4 mr-2" />
                 Update Profile
               </Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>
-              <Link to={createPageUrl(isRecruiter ? "recruitersettings" : "settings")} className="flex items-center">
+              <Link
+                to={createPageUrl(
+                  isRecruiter ? "recruitersettings" : "settings"
+                )}
+                className="flex items-center"
+              >
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Link>
@@ -156,7 +196,11 @@ export default function UserProfileDropdown({ user, onLogout }) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={handleLogout} disabled={isLoggingOut} className="flex items-center text-red-600">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="flex items-center text-red-600"
+        >
           <LogOut className="w-4 h-4 mr-2" />
           {isLoggingOut ? "Logging out..." : "Logout"}
         </DropdownMenuItem>

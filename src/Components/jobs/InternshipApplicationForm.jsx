@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ApplicationApi from "../../Services/ApplicationApi";
-import UserApi from "../../Services/UserApi";
+import ApplicationApi from "../../services/ApplicationApi";
+import UserApi from "../../services/UserApi";
 // import { UploadFile } from "@/integrations/Core";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, FileText, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function InternshipApplicationForm({ internship, onClose, onSuccess }) {
+export default function InternshipApplicationForm({
+  internship,
+  onClose,
+  onSuccess,
+}) {
   console.log("InternshipApplicationForm received internship:", internship);
 
   // Get internship ID from URL params as fallback
@@ -91,7 +95,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
     return (
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Apply for {internship.title}</CardTitle>
+          <CardTitle className="text-2xl text-center">
+            Apply for {internship.title}
+          </CardTitle>
           <p className="text-center text-gray-600">
             at {internship.company} • {internship.location}
             {internship.duration && ` • ${internship.duration}`}
@@ -102,7 +108,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
             You must be logged in as a student to apply for this internship.
           </div>
           <div className="flex justify-center">
-            <Button onClick={() => navigate("/p/studentauth")}>Login as Student</Button>
+            <Button onClick={() => navigate("/p/studentauth")}>
+              Login as Student
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -159,7 +167,10 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
       console.log("Sending application data:", applicationData);
       console.log("Internship object:", internship);
       console.log("Internship ID from URL:", internshipIdFromUrl);
-      console.log("Final internship_id being sent:", internship.id || internship._id || internshipIdFromUrl);
+      console.log(
+        "Final internship_id being sent:",
+        internship.id || internship._id || internshipIdFromUrl
+      );
 
       // Create the application directly
       await ApplicationApi.create(applicationData);
@@ -209,7 +220,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">Apply for {internship.title}</CardTitle>
+        <CardTitle className="text-2xl text-center">
+          Apply for {internship.title}
+        </CardTitle>
         <p className="text-center text-gray-600">
           at {internship.company} • {internship.location}
           {internship.duration && ` • ${internship.duration}`}
@@ -220,7 +233,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name *
+              </label>
               <Input
                 name="applicant_name"
                 value={formData.applicant_name}
@@ -230,7 +245,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address *
+              </label>
               <Input
                 name="applicant_email"
                 type="email"
@@ -244,11 +261,20 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-              <Input name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+91 9876543210" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Phone Number
+              </label>
+              <Input
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="+91 9876543210"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Relevant Experience</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Relevant Experience
+              </label>
               <Input
                 name="experience"
                 value={formData.experience}
@@ -259,7 +285,9 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Cover Letter *</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Cover Letter *
+            </label>
             <Textarea
               name="cover_letter"
               value={formData.cover_letter}
@@ -271,14 +299,17 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Resume</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Resume
+            </label>
             <input
-            required
-            type="text" name="resume_url"
-            value={formData.resume_url}
-            onChange={handleInputChange}
-            placeholder="Paste your resume link here"
-            className=" block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              required
+              type="text"
+              name="resume_url"
+              value={formData.resume_url}
+              onChange={handleInputChange}
+              placeholder="Paste your resume link here"
+              className=" block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
@@ -286,7 +317,11 @@ export default function InternshipApplicationForm({ internship, onClose, onSucce
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="bg-blue-500 hover:bg-blue-600">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-500 hover:bg-blue-600"
+            >
               {isSubmitting ? "Submitting..." : "Submit Internship Application"}
             </Button>
           </div>

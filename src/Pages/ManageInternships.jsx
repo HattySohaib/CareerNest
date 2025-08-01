@@ -6,8 +6,8 @@ import { Eye, Edit, Trash2, Plus } from "lucide-react";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { fetchInternships, deleteInternship } from "../Services/InternshipApi";
-import { useToast } from "@/Components/common/ToastContext";
+import { fetchInternships, deleteInternship } from "../services/InternshipApi";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function ManageInternships() {
   const [internships, setInternships] = useState([]);
@@ -45,7 +45,9 @@ export default function ManageInternships() {
     if (window.confirm("Are you sure you want to delete this internship?")) {
       try {
         await deleteInternship(internshipId);
-        setInternships(internships.filter(internship => internship._id !== internshipId));
+        setInternships(
+          internships.filter((internship) => internship._id !== internshipId)
+        );
         showSuccess("Internship deleted successfully");
       } catch (error) {
         console.error("Error deleting internship:", error);
@@ -55,9 +57,9 @@ export default function ManageInternships() {
   };
 
   const toggleDetails = (internshipId) => {
-    setShowDetails(prev => ({
+    setShowDetails((prev) => ({
       ...prev,
-      [internshipId]: !prev[internshipId]
+      [internshipId]: !prev[internshipId],
     }));
   };
 
@@ -78,7 +80,9 @@ export default function ManageInternships() {
               </Button>
             </Link>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Manage Internships</h1>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Manage Internships
+              </h1>
               <p className="text-gray-600">Manage your internship postings</p>
             </div>
           </div>
@@ -104,31 +108,38 @@ export default function ManageInternships() {
                         </h3>
                         <Badge
                           className={
-                            internship.status === "approved" ? "bg-green-100 text-green-800" :
-                            internship.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-                            "bg-gray-100 text-gray-800"
+                            internship.status === "approved"
+                              ? "bg-green-100 text-green-800"
+                              : internship.status === "pending"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-gray-100 text-gray-800"
                           }
                         >
                           {internship.status || "pending"}
                         </Badge>
                       </div>
                       <p className="text-gray-600 mb-2">
-                        {internship.company} • {internship.location} • {internship.duration}
+                        {internship.company} • {internship.location} •{" "}
+                        {internship.duration}
                       </p>
                       <p className="text-sm text-gray-500 mb-2">
                         Stipend: {internship.stipend}
                       </p>
-                      
+
                       {showDetails[internship._id] && (
                         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                           <h4 className="font-semibold mb-2">Description:</h4>
-                          <p className="text-gray-700 mb-3">{internship.description}</p>
+                          <p className="text-gray-700 mb-3">
+                            {internship.description}
+                          </p>
                           <h4 className="font-semibold mb-2">Requirements:</h4>
-                          <p className="text-gray-700">{internship.requirements}</p>
+                          <p className="text-gray-700">
+                            {internship.requirements}
+                          </p>
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex items-center space-x-2 ml-4">
                       <Button
                         variant="outline"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { createPageUrl } from "./Components/utils";
+import { createPageUrl } from "./components/utils";
 import {
   Menu,
   X,
@@ -23,7 +23,7 @@ import {
   Twitter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Chatbot from "./Components/Chatbot";
+import Chatbot from "./components/Chatbot";
 import UserProfileDropdown from "@/components/layout/UserProfileDropdown";
 
 export default function Layout({ children, currentPageName }) {
@@ -99,11 +99,16 @@ export default function Layout({ children, currentPageName }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to={createPageUrl("Home")} className="flex items-center space-x-2">
+            <Link
+              to={createPageUrl("Home")}
+              className="flex items-center space-x-2"
+            >
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
                 <Briefcase className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">CareerNest</span>
+              <span className="text-xl font-bold text-gray-900">
+                CareerNest
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -132,12 +137,17 @@ export default function Layout({ children, currentPageName }) {
               ) : (
                 <>
                   <Link to={createPageUrl("StudentAuth")}>
-                    <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                    <Button
+                      variant="outline"
+                      className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                    >
                       Student
                     </Button>
                   </Link>
                   <Link to={createPageUrl("RecruiterAuth")}>
-                    <Button className="bg-blue-600 hover:bg-blue-700">Recruiter</Button>
+                    <Button className="bg-blue-600 hover:bg-blue-700">
+                      Recruiter
+                    </Button>
                   </Link>
                 </>
               )}
@@ -148,7 +158,11 @@ export default function Layout({ children, currentPageName }) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="block lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -157,7 +171,10 @@ export default function Layout({ children, currentPageName }) {
         {mobileMenuOpen && (!user || user.role !== "student") && (
           <div className="fixed inset-0 z-50 lg:hidden">
             {/* Click outside to close */}
-            <div className="fixed inset-0" onClick={() => setMobileMenuOpen(false)} />
+            <div
+              className="fixed inset-0"
+              onClick={() => setMobileMenuOpen(false)}
+            />
             {/* Mobile Menu */}
             <div
               className="fixed top-0 left-0 h-full w-2/3 max-w-sm bg-white shadow-xl overflow-hidden"
@@ -184,17 +201,31 @@ export default function Layout({ children, currentPageName }) {
                       <div className="w-full h-10 bg-gray-200 rounded animate-pulse my-2"></div>
                     ) : user ? (
                       <div className="px-1 py-2">
-                        <UserProfileDropdown user={user} onLogout={handleLogout} />
+                        <UserProfileDropdown
+                          user={user}
+                          onLogout={handleLogout}
+                        />
                       </div>
                     ) : (
                       <>
-                        <Link to={createPageUrl("StudentAuth")} onClick={() => setMobileMenuOpen(false)}>
-                          <Button variant="outline" className="w-full text-blue-600 border-blue-600 hover:bg-blue-50">
+                        <Link
+                          to={createPageUrl("StudentAuth")}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <Button
+                            variant="outline"
+                            className="w-full text-blue-600 border-blue-600 hover:bg-blue-50"
+                          >
                             Student
                           </Button>
                         </Link>
-                        <Link to={createPageUrl("RecruiterAuth")} onClick={() => setMobileMenuOpen(false)}>
-                          <Button className="w-full bg-blue-600 hover:bg-blue-700">Recruiter</Button>
+                        <Link
+                          to={createPageUrl("RecruiterAuth")}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                            Recruiter
+                          </Button>
                         </Link>
                       </>
                     )}
@@ -209,7 +240,10 @@ export default function Layout({ children, currentPageName }) {
         {mobileMenuOpen && user && user.role === "student" && (
           <div className="fixed inset-0 z-50 md:hidden">
             {/* Click outside to close */}
-            <div className="fixed inset-0" onClick={() => setMobileMenuOpen(false)} />
+            <div
+              className="fixed inset-0"
+              onClick={() => setMobileMenuOpen(false)}
+            />
             {/* Sidebar */}
             <div
               className="fixed left-0 top-0 h-full w-2/3 max-w-sm bg-white shadow-xl overflow-hidden"
@@ -229,7 +263,9 @@ export default function Layout({ children, currentPageName }) {
                         : "U"}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{user.full_name || user.name || "User"}</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {user.full_name || user.name || "User"}
+                      </p>
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
@@ -238,7 +274,9 @@ export default function Layout({ children, currentPageName }) {
                     className="p-1 hover:bg-gray-100 rounded"
                   >
                     <ChevronDown
-                      className={`w-4 h-4 text-gray-500 transition-transform ${moreDropdownOpen ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 text-gray-500 transition-transform ${
+                        moreDropdownOpen ? "rotate-180" : ""
+                      }`}
                     />
                   </button>
                 </div>
@@ -248,7 +286,9 @@ export default function Layout({ children, currentPageName }) {
                   <div className="mt-3 space-y-1">
                     {/* Your Profile Section */}
                     <button
-                      onClick={() => handleNavigationClick(createPageUrl("profile"))}
+                      onClick={() =>
+                        handleNavigationClick(createPageUrl("profile"))
+                      }
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                     >
                       <User className="w-4 h-4 mr-3" />
@@ -259,17 +299,23 @@ export default function Layout({ children, currentPageName }) {
 
                     {/* SUPPORT Section */}
                     <div className="px-4 py-1">
-                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Support</p>
+                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                        Support
+                      </p>
                     </div>
                     <button
-                      onClick={() => handleNavigationClick(createPageUrl("help"))}
+                      onClick={() =>
+                        handleNavigationClick(createPageUrl("help"))
+                      }
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                     >
                       <HelpCircle className="w-4 h-4 mr-3" />
                       Help Center
                     </button>
                     <button
-                      onClick={() => handleNavigationClick(createPageUrl("contact"))}
+                      onClick={() =>
+                        handleNavigationClick(createPageUrl("contact"))
+                      }
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                     >
                       <MessageCircle className="w-4 h-4 mr-3" />
@@ -280,10 +326,14 @@ export default function Layout({ children, currentPageName }) {
 
                     {/* SETTINGS Section */}
                     <div className="px-4 py-1">
-                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Settings</p>
+                      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                        Settings
+                      </p>
                     </div>
                     <button
-                      onClick={() => handleNavigationClick(createPageUrl("updateProfile"))}
+                      onClick={() =>
+                        handleNavigationClick(createPageUrl("updateProfile"))
+                      }
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                     >
                       <User className="w-4 h-4 mr-3" />
@@ -311,10 +361,17 @@ export default function Layout({ children, currentPageName }) {
                       Upload Resume
                     </button> */}
                     <button
-                      onClick={() => handleNavigationClick(createPageUrl("settings"))}
+                      onClick={() =>
+                        handleNavigationClick(createPageUrl("settings"))
+                      }
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors flex items-center"
                     >
-                      <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-4 h-4 mr-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -348,7 +405,9 @@ export default function Layout({ children, currentPageName }) {
                   <button
                     onClick={() => handleNavigationClick(createPageUrl("Home"))}
                     className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                      isActive(createPageUrl("Home")) ? "text-blue-600 bg-blue-50" : "text-gray-900 hover:bg-gray-100"
+                      isActive(createPageUrl("Home"))
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-900 hover:bg-gray-100"
                     }`}
                   >
                     Home
@@ -356,13 +415,17 @@ export default function Layout({ children, currentPageName }) {
                   <button
                     onClick={() => handleNavigationClick(createPageUrl("Jobs"))}
                     className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                      isActive(createPageUrl("Jobs")) ? "text-blue-600 bg-blue-50" : "text-gray-900 hover:bg-gray-100"
+                      isActive(createPageUrl("Jobs"))
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-900 hover:bg-gray-100"
                     }`}
                   >
                     Jobs
                   </button>
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("Internships"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("Internships"))
+                    }
                     className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
                       isActive(createPageUrl("Internships"))
                         ? "text-blue-600 bg-blue-50"
@@ -382,9 +445,13 @@ export default function Layout({ children, currentPageName }) {
                     Resume
                   </button> */}
                   <button
-                    onClick={() => handleNavigationClick(createPageUrl("About"))}
+                    onClick={() =>
+                      handleNavigationClick(createPageUrl("About"))
+                    }
                     className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                      isActive(createPageUrl("About")) ? "text-blue-600 bg-blue-50" : "text-gray-900 hover:bg-gray-100"
+                      isActive(createPageUrl("About"))
+                        ? "text-blue-600 bg-blue-50"
+                        : "text-gray-900 hover:bg-gray-100"
                     }`}
                   >
                     About
@@ -414,8 +481,9 @@ export default function Layout({ children, currentPageName }) {
                 <span className="text-xl font-bold">CareerNest</span>
               </div>
               <p className="text-gray-400 text-sm">
-                Global platform connecting passionate individuals with impactful volunteer opportunities and internships
-                across leading organizations worldwide.
+                Global platform connecting passionate individuals with impactful
+                volunteer opportunities and internships across leading
+                organizations worldwide.
               </p>
             </div>
 
@@ -423,17 +491,26 @@ export default function Layout({ children, currentPageName }) {
               <h3 className="text-lg font-semibold mb-4">For Job Seekers</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>
-                  <Link to={createPageUrl("Jobs")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("Jobs")}
+                    className="hover:text-white transition-colors"
+                  >
                     Browse Jobs
                   </Link>
                 </li>
                 <li>
-                  <Link to={createPageUrl("Internships")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("Internships")}
+                    className="hover:text-white transition-colors"
+                  >
                     Find Internships
                   </Link>
                 </li>
                 <li>
-                  <Link to={createPageUrl("StudentAuth")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("StudentAuth")}
+                    className="hover:text-white transition-colors"
+                  >
                     Student Login
                   </Link>
                 </li>
@@ -444,17 +521,26 @@ export default function Layout({ children, currentPageName }) {
               <h3 className="text-lg font-semibold mb-4">For Employers</h3>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li>
-                  <Link to={createPageUrl("RecruiterAuth")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("RecruiterAuth")}
+                    className="hover:text-white transition-colors"
+                  >
                     Post a Job
                   </Link>
                 </li>
                 <li>
-                  <Link to={createPageUrl("RecruiterAuth")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("RecruiterAuth")}
+                    className="hover:text-white transition-colors"
+                  >
                     Recruiter Login
                   </Link>
                 </li>
                 <li>
-                  <Link to={createPageUrl("About")} className="hover:text-white transition-colors">
+                  <Link
+                    to={createPageUrl("About")}
+                    className="hover:text-white transition-colors"
+                  >
                     About Us
                   </Link>
                 </li>
@@ -498,16 +584,36 @@ export default function Layout({ children, currentPageName }) {
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
             <p>&copy; 2025 CareerNest. All rights reserved.</p>
             <div className="flex justify-center items-center gap-6 mt-4">
-              <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="w-6 h-6 hover:scale-110 transition-transform text-gray-400" />
               </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <Instagram className="w-6 h-6 hover:scale-110 transition-transform text-gray-400" />
               </a>
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
                 <Facebook className="w-6 h-6 hover:scale-110 transition-transform text-gray-400" />
               </a>
-              <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <a
+                href="https://www.twitter.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
                 <Twitter className="w-6 h-6 hover:scale-110 transition-transform text-gray-400" />
               </a>
             </div>
@@ -530,8 +636,7 @@ export const AdminLayout = ({ children }) => {
     <div className="min-h-screen w-full flex bg-gray-50">
       <aside className="w-64 bg-white border-r flex-shrink-0 hidden md:flex flex-col">
         <div className="h-16 border-b flex items-center px-6">
-          <Link to={createPageUrl("Home")}
-            className="flex items-center gap-2">
+          <Link to={createPageUrl("Home")} className="flex items-center gap-2">
             <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
               <Briefcase className="w-5 h-5 text-indigo-600" />
             </div>

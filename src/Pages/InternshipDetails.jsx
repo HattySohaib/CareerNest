@@ -15,9 +15,9 @@ import {
   GraduationCap,
   BookOpen,
 } from "lucide-react";
-import { createPageUrl } from "../Components/utils";
-import LoadingSpinner from "../Components/common/LoadingSpinner";
-import InternshipApplicationForm from "../Components/jobs/InternshipApplicationForm";
+import { createPageUrl } from "../components/utils";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import InternshipApplicationForm from "../components/jobs/InternshipApplicationForm";
 
 export default function InternshipDetails() {
   const { internshipId } = useParams();
@@ -125,10 +125,16 @@ export default function InternshipDetails() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Internship Not Found</h2>
-          <p className="text-gray-600 mb-6">The internship you're looking for doesn't exist or has been removed.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Internship Not Found
+          </h2>
+          <p className="text-gray-600 mb-6">
+            The internship you're looking for doesn't exist or has been removed.
+          </p>
           <Link to={createPageUrl("Internships")}>
-            <Button className="bg-blue-600 hover:bg-blue-700">Browse All Internships</Button>
+            <Button className="bg-blue-600 hover:bg-blue-700">
+              Browse All Internships
+            </Button>
           </Link>
         </div>
       </div>
@@ -189,7 +195,9 @@ export default function InternshipDetails() {
 
           {isStudent() && internship.status === "approved" && (
             <Link to={`/p/internship-details/${internship._id}?apply=true`}>
-              <Button className="bg-blue-600 hover:bg-blue-700">Apply for Internship</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                Apply for Internship
+              </Button>
             </Link>
           )}
         </div>
@@ -203,10 +211,14 @@ export default function InternshipDetails() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-3xl font-bold text-gray-900 mb-2">{internship.title}</CardTitle>
+                    <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
+                      {internship.title}
+                    </CardTitle>
                     <div className="flex items-center space-x-2 text-gray-600 mb-4">
                       <Building className="w-5 h-5" />
-                      <span className="text-lg font-medium">{internship.company}</span>
+                      <span className="text-lg font-medium">
+                        {internship.company}
+                      </span>
                     </div>
                   </div>
                   {internship.company_logo && (
@@ -232,7 +244,9 @@ export default function InternshipDetails() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <IndianRupee className="w-5 h-5 text-green-500" />
-                    <span className="text-green-600 font-semibold">{formatStipend(internship.stipend)}</span>
+                    <span className="text-green-600 font-semibold">
+                      {formatStipend(internship.stipend)}
+                    </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Clock className="w-5 h-5 text-gray-400" />
@@ -242,24 +256,29 @@ export default function InternshipDetails() {
 
                 {/* Description */}
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">About the Internship</h3>
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{internship.description}</p>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    About the Internship
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                    {internship.description}
+                  </p>
                 </div>
 
                 {/* Requirements */}
-                {internship.requirements && internship.requirements.length > 0 && (
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <GraduationCap className="w-5 h-5" />
-                      Requirements
-                    </h3>
-                    <ul className="list-disc list-inside space-y-2 text-gray-700">
-                      {internship.requirements.map((requirement, index) => (
-                        <li key={index}>{requirement}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {internship.requirements &&
+                  internship.requirements.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                        <GraduationCap className="w-5 h-5" />
+                        Requirements
+                      </h3>
+                      <ul className="list-disc list-inside space-y-2 text-gray-700">
+                        {internship.requirements.map((requirement, index) => (
+                          <li key={index}>{requirement}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {/* Skills */}
                 {internship.skills && internship.skills.length > 0 && (
@@ -270,7 +289,11 @@ export default function InternshipDetails() {
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {internship.skills.map((skill, index) => (
-                        <Badge key={index} variant="outline" className="text-blue-600 border-blue-600">
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="text-blue-600 border-blue-600"
+                        >
                           {skill}
                         </Badge>
                       ))}
@@ -287,14 +310,21 @@ export default function InternshipDetails() {
             {isStudent() && internship.status === "approved" && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">Ready to Apply?</CardTitle>
+                  <CardTitle className="text-lg font-semibold">
+                    Ready to Apply?
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 mb-4">
-                    Take the first step towards your dream internship. Submit your application now!
+                    Take the first step towards your dream internship. Submit
+                    your application now!
                   </p>
-                  <Link to={`/p/internship-details/${internship._id}?apply=true`}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">Apply for Internship</Button>
+                  <Link
+                    to={`/p/internship-details/${internship._id}?apply=true`}
+                  >
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                      Apply for Internship
+                    </Button>
                   </Link>
                 </CardContent>
               </Card>
@@ -303,7 +333,9 @@ export default function InternshipDetails() {
             {/* Company Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">About {internship.company}</CardTitle>
+                <CardTitle className="text-lg font-semibold">
+                  About {internship.company}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -322,7 +354,9 @@ export default function InternshipDetails() {
             {/* Internship Details */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Internship Details</CardTitle>
+                <CardTitle className="text-lg font-semibold">
+                  Internship Details
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -332,7 +366,9 @@ export default function InternshipDetails() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Stipend:</span>
-                    <span className="font-medium text-green-600">{formatStipend(internship.stipend)}</span>
+                    <span className="font-medium text-green-600">
+                      {formatStipend(internship.stipend)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Location:</span>

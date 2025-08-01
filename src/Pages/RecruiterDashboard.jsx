@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import UserApi from "../Services/UserApi";
-import JobApi from "../Services/JobApi";
-import ApplicationApi from "../Services/ApplicationApi";
-import { fetchInternships } from "../Services/InternshipApi";
+import UserApi from "../services/UserApi";
+import JobApi from "../services/JobApi";
+import ApplicationApi from "../services/ApplicationApi";
+import { fetchInternships } from "../services/InternshipApi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Briefcase, Users, Eye, Edit, Trash2, Building } from "lucide-react";
+import {
+  Plus,
+  Briefcase,
+  Users,
+  Eye,
+  Edit,
+  Trash2,
+  Building,
+} from "lucide-react";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { Link } from "react-router-dom";
 
@@ -31,7 +39,9 @@ export default function RecruiterDashboard() {
       setJobs(jobData);
 
       // Load internships for the current recruiter
-      const internshipData = await fetchInternships({ posted_by: userData.email });
+      const internshipData = await fetchInternships({
+        posted_by: userData.email,
+      });
       setInternships(internshipData);
 
       // Load applications (this might need to be filtered by recruiter's jobs)
@@ -53,7 +63,9 @@ export default function RecruiterDashboard() {
   }
 
   const activeJobs = jobs.filter((job) => job.status === "active").length;
-  const totalApplications = applications.filter((app) => jobs.some((job) => job._id === app.job_id || job.id === app.job_id)).length;
+  const totalApplications = applications.filter((app) =>
+    jobs.some((job) => job._id === app.job_id || job.id === app.job_id)
+  ).length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,22 +73,26 @@ export default function RecruiterDashboard() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Recruiter Dashboard</h1>
-            <p className="text-gray-600">Welcome back, {user?.full_name || "Recruiter"}!</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Recruiter Dashboard
+            </h1>
+            <p className="text-gray-600">
+              Welcome back, {user?.full_name || "Recruiter"}!
+            </p>
           </div>
           <div className="flex gap-4">
             <Link to="/p/post-jobs">
-            <Button className="bg-blue-500 hover:bg-blue-600">
-              <Plus className="w-4 h-4" />
-              Post New Job
-            </Button>
-          </Link>
-          <Link to="/p/post-internships">
-            <Button className="bg-blue-500 hover:bg-blue-600">
-              <Plus className="w-4 h-4" />
-              Post New Internship
-            </Button>
-          </Link>
+              <Button className="bg-blue-500 hover:bg-blue-600">
+                <Plus className="w-4 h-4" />
+                Post New Job
+              </Button>
+            </Link>
+            <Link to="/p/post-internships">
+              <Button className="bg-blue-500 hover:bg-blue-600">
+                <Plus className="w-4 h-4" />
+                Post New Internship
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -89,8 +105,12 @@ export default function RecruiterDashboard() {
                   <Briefcase className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Active Jobs</p>
-                  <p className="text-2xl font-bold text-gray-900">{activeJobs}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Active Jobs
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {activeJobs}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -103,8 +123,12 @@ export default function RecruiterDashboard() {
                   <Users className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Applications</p>
-                  <p className="text-2xl font-bold text-gray-900">{totalApplications}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Applications
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {totalApplications}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -118,7 +142,9 @@ export default function RecruiterDashboard() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">Company</p>
-                  <p className="text-lg font-bold text-gray-900">{user?.company_name || "Not Set"}</p>
+                  <p className="text-lg font-bold text-gray-900">
+                    {user?.company_name || "Not Set"}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -133,16 +159,23 @@ export default function RecruiterDashboard() {
           <CardContent>
             {jobs.length > 0 ? (
               <div className="space-y-4">
-                                 {jobs.map((job) => (
-                   <div key={job._id || job.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {jobs.map((job) => (
+                  <div
+                    key={job._id || job.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div>
-                      <h3 className="font-semibold text-gray-900">{job.title}</h3>
+                      <h3 className="font-semibold text-gray-900">
+                        {job.title}
+                      </h3>
                       <p className="text-sm text-gray-600">
                         {job.location} • {job.job_type}
                       </p>
                       <Badge
                         className={
-                          job.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                          job.status === "active"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-gray-100 text-gray-800"
                         }
                       >
                         {job.status}
@@ -157,7 +190,11 @@ export default function RecruiterDashboard() {
                         <Edit className="w-4 h-4 mr-1" />
                         Edit
                       </Button>
-                      <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700"
+                      >
                         <Trash2 className="w-4 h-4 mr-1" />
                         Delete
                       </Button>
@@ -168,8 +205,12 @@ export default function RecruiterDashboard() {
             ) : (
               <div className="text-center py-8">
                 <Briefcase className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">No jobs posted yet</h3>
-                <p className="text-gray-500 mb-4">Start by posting your first job to attract candidates</p>
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  No jobs posted yet
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Start by posting your first job to attract candidates
+                </p>
                 <Link to="/p/post-jobs">
                   <Button className="bg-blue-500 hover:bg-blue-600">
                     <Plus className="w-4 h-4 mr-2" />
@@ -189,18 +230,25 @@ export default function RecruiterDashboard() {
           <CardContent>
             {internships.length > 0 ? (
               <div className="space-y-4">
-                                 {internships.map((internship) => (
-                   <div key={internship._id || internship.id} className="flex items-center justify-between p-4 border rounded-lg">
+                {internships.map((internship) => (
+                  <div
+                    key={internship._id || internship.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div>
-                      <h3 className="font-semibold text-gray-900">{internship.title}</h3>
+                      <h3 className="font-semibold text-gray-900">
+                        {internship.title}
+                      </h3>
                       <p className="text-sm text-gray-600">
                         {internship.location} • {internship.duration}
                       </p>
                       <Badge
                         className={
-                          internship.status === "approved" ? "bg-green-100 text-green-800" : 
-                          internship.status === "pending" ? "bg-yellow-100 text-yellow-800" : 
-                          "bg-gray-100 text-gray-800"
+                          internship.status === "approved"
+                            ? "bg-green-100 text-green-800"
+                            : internship.status === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-gray-100 text-gray-800"
                         }
                       >
                         {internship.status}
@@ -215,7 +263,11 @@ export default function RecruiterDashboard() {
                         <Edit className="w-4 h-4 mr-1" />
                         Edit
                       </Button>
-                      <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700"
+                      >
                         <Trash2 className="w-4 h-4 mr-1" />
                         Delete
                       </Button>
@@ -226,8 +278,12 @@ export default function RecruiterDashboard() {
             ) : (
               <div className="text-center py-8">
                 <Briefcase className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">No internships posted yet</h3>
-                <p className="text-gray-500 mb-4">Start by posting your first internship to attract candidates</p>
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                  No internships posted yet
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Start by posting your first internship to attract candidates
+                </p>
                 <Link to="/p/post-internships">
                   <Button className="bg-blue-500 hover:bg-blue-600">
                     <Plus className="w-4 h-4 mr-2" />

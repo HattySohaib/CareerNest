@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 // import { User } from "@/entities/User";
 import { Link, useNavigate } from "react-router-dom";
-import { createPageUrl } from "../Components/utils";
+import { createPageUrl } from "../components/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   GraduationCap,
   Mail,
@@ -22,7 +28,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import { useToast } from "@/Components/common/ToastContext";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function StudentAuth() {
   const { showSuccess } = useToast();
@@ -58,10 +64,13 @@ export default function StudentAuth() {
   //password generation
   const generatePassword = () => {
     const length = 12;
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]<>?,.";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]<>?,.";
     let result = "";
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     setFormData({ ...formData, password: result, confirm_password: result });
   };
@@ -93,7 +102,11 @@ export default function StudentAuth() {
       // Password strength logic
       if (value.length < 8) {
         setPasswordStrength("Weak");
-      } else if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(value)) {
+      } else if (
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(
+          value
+        )
+      ) {
         setPasswordStrength("Strong");
       } else {
         setPasswordStrength("Medium");
@@ -120,7 +133,10 @@ export default function StudentAuth() {
       const res = await fetch(`${backendURL}/api/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ credential: credentialResponse.credential, user_type: "student" }),
+        body: JSON.stringify({
+          credential: credentialResponse.credential,
+          user_type: "student",
+        }),
       });
       if (!res.ok) throw new Error("Google login failed");
       const data = await res.json();
@@ -196,7 +212,10 @@ export default function StudentAuth() {
         const res = await fetch(`${backendURL}/api/auth/student/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: formData.email, password: formData.password }),
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
         });
         if (!res.ok) {
           const errorData = await res.json();
@@ -211,7 +230,9 @@ export default function StudentAuth() {
     } catch (error) {
       setError(
         error.message ||
-          (loginMethod === "email" ? "Invalid email or password" : "Phone login failed. Please try again.")
+          (loginMethod === "email"
+            ? "Invalid email or password"
+            : "Phone login failed. Please try again.")
       );
       console.error("Login error:", error);
     } finally {
@@ -247,8 +268,14 @@ export default function StudentAuth() {
         setError("Passwords do not match.");
         return;
       }
-      if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(formData.password)) {
-        setError("Password must include a letter, a number, and a special character.");
+      if (
+        !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(
+          formData.password
+        )
+      ) {
+        setError(
+          "Password must include a letter, a number, and a special character."
+        );
         return;
       }
 
@@ -303,8 +330,12 @@ export default function StudentAuth() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Join CareerNest as a Student</h1>
-            <p className="text-gray-600">Create your profile and start applying to your dream jobs</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Join CareerNest as a Student
+            </h1>
+            <p className="text-gray-600">
+              Create your profile and start applying to your dream jobs
+            </p>
           </div>
 
           <Card className="shadow-xl">
@@ -350,7 +381,9 @@ export default function StudentAuth() {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name *
+                      </label>
                       <Input
                         name="full_name"
                         value={formData.full_name}
@@ -360,7 +393,9 @@ export default function StudentAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email *
+                      </label>
                       <Input
                         name="email"
                         type="email"
@@ -371,7 +406,9 @@ export default function StudentAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
                       <Input
                         name="phone"
                         value={formData.phone}
@@ -381,10 +418,14 @@ export default function StudentAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Location
+                      </label>
                       <Select
                         value={formData.location}
-                        onValueChange={(value) => handleSelectChange("location", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("location", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select your city" />
@@ -404,10 +445,14 @@ export default function StudentAuth() {
 
                 {/* Password Fields */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Security</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Account Security
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Password *
+                      </label>
                       <div className="relative">
                         <Input
                           name="password"
@@ -422,16 +467,24 @@ export default function StudentAuth() {
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                       <div className="mt-1 text-xs">
                         <span>Password strength: {passwordStrength}</span>
                       </div>
-                      <div className="mt-1 text-xs text-gray-500">{passwordMessage}</div>
+                      <div className="mt-1 text-xs text-gray-500">
+                        {passwordMessage}
+                      </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Confirm Password *
+                      </label>
                       <div className="relative">
                         <Input
                           name="confirm_password"
@@ -446,7 +499,11 @@ export default function StudentAuth() {
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                       <button
@@ -468,24 +525,36 @@ export default function StudentAuth() {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Education Level</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Education Level
+                      </label>
                       <Select
                         value={formData.education_level}
-                        onValueChange={(value) => handleSelectChange("education_level", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("education_level", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select level" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="High School">High School</SelectItem>
-                          <SelectItem value="Bachelor's Degree">Bachelor's Degree</SelectItem>
-                          <SelectItem value="Master's Degree">Master's Degree</SelectItem>
+                          <SelectItem value="High School">
+                            High School
+                          </SelectItem>
+                          <SelectItem value="Bachelor's Degree">
+                            Bachelor's Degree
+                          </SelectItem>
+                          <SelectItem value="Master's Degree">
+                            Master's Degree
+                          </SelectItem>
                           <SelectItem value="PhD">PhD</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Field of Study</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Field of Study
+                      </label>
                       <Input
                         name="field_of_study"
                         value={formData.field_of_study}
@@ -494,10 +563,14 @@ export default function StudentAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Graduation Year</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Graduation Year
+                      </label>
                       <Select
                         value={formData.graduation_year}
-                        onValueChange={(value) => handleSelectChange("graduation_year", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("graduation_year", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select year" />
@@ -511,10 +584,14 @@ export default function StudentAuth() {
                       </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Experience Level</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Experience Level
+                      </label>
                       <Select
                         value={formData.experience}
-                        onValueChange={(value) => handleSelectChange("experience", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("experience", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select experience" />
@@ -532,10 +609,14 @@ export default function StudentAuth() {
 
                 {/* Skills and Bio */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Skills & Profile</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Skills & Profile
+                  </h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Skills (comma-separated)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Skills (comma-separated)
+                      </label>
                       <Input
                         name="skills"
                         value={formData.skills}
@@ -544,7 +625,9 @@ export default function StudentAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Bio / Summary</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Bio / Summary
+                      </label>
                       <Textarea
                         name="bio"
                         value={formData.bio}
@@ -568,7 +651,9 @@ export default function StudentAuth() {
                 <GoogleOAuthProvider clientId={clientId}>
                   <GoogleLogin
                     onSuccess={handleGoogleLoginSuccess}
-                    onError={() => setError("Google signup failed. Please try again.")}
+                    onError={() =>
+                      setError("Google signup failed. Please try again.")
+                    }
                     width="100%"
                     useOneTap
                   />
@@ -599,15 +684,22 @@ export default function StudentAuth() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         {/* Back Button */}
-        <Link to={createPageUrl("Home")} className="flex items-center text-gray-600 hover:text-gray-900 mb-8">
+        <Link
+          to={createPageUrl("Home")}
+          className="flex items-center text-gray-600 hover:text-gray-900 mb-8"
+        >
           <ArrowLeft className="w-5 h-5 mr-2" />
           <span className="text-lg">Back</span>
         </Link>
 
         {/* Welcome Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back Student!</h1>
-          <p className="text-gray-600">Welcome back! Please enter your details.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Welcome Back Student!
+          </h1>
+          <p className="text-gray-600">
+            Welcome back! Please enter your details.
+          </p>
         </div>
 
         {/* Error Message */}
@@ -627,7 +719,9 @@ export default function StudentAuth() {
         {/* Login Form - Only Email Login Allowed */}
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
             <Input
               name="email"
               type="email"
@@ -639,7 +733,9 @@ export default function StudentAuth() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
             <div className="relative">
               <Input
                 name="password"
@@ -657,12 +753,20 @@ export default function StudentAuth() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
           <div className="text-right">
-            <button type="button" onClick={handleForgotPassword} className="text-sm text-gray-600 hover:text-gray-900">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sm text-gray-600 hover:text-gray-900"
+            >
               Forgot password
             </button>
           </div>
@@ -687,7 +791,10 @@ export default function StudentAuth() {
         <div className="text-center mt-8">
           <p className="text-gray-600">
             Don't have an account?{" "}
-            <button onClick={() => setIsLogin(false)} className="font-semibold text-gray-900 hover:text-blue-600">
+            <button
+              onClick={() => setIsLogin(false)}
+              className="font-semibold text-gray-900 hover:text-blue-600"
+            >
               Sign up for free
             </button>
           </p>

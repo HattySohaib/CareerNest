@@ -6,16 +6,23 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
-import { useToast } from "@/Components/common/ToastContext";
+import { useToast } from "@/components/common/ToastContext";
 
-const locations = ["Noida", "Delhi", "Pune", "Mumbai", "Bangalore", "Hyderabad"];
+const locations = [
+  "Noida",
+  "Delhi",
+  "Pune",
+  "Mumbai",
+  "Bangalore",
+  "Hyderabad",
+];
 
 export default function PostInternship() {
   const navigate = useNavigate();
   const { showError, showSuccess, showWarning } = useToast();
   const [form, setForm] = useState({
     title: "",
-    company: "",           // <-- added company here
+    company: "", // <-- added company here
     location: "",
     stipend: "",
     duration: "",
@@ -43,7 +50,7 @@ export default function PostInternship() {
     }
   }, [navigate]);
 
-   const handleGoBack = () => {
+  const handleGoBack = () => {
     navigate(-1); // 👈 go to previous page
   };
 
@@ -64,13 +71,17 @@ export default function PostInternship() {
     e.preventDefault();
 
     if (!recruiter) {
-      showError("Only recruiters can post internships. Please log in as a recruiter.");
+      showError(
+        "Only recruiters can post internships. Please log in as a recruiter."
+      );
       navigate("/p/recruiterauth");
       return;
     }
 
     if (!form.company || form.company.trim() === "") {
-      showWarning("Company name is required. Please update your profile or enter company name.");
+      showWarning(
+        "Company name is required. Please update your profile or enter company name."
+      );
       return;
     }
 
@@ -86,24 +97,31 @@ export default function PostInternship() {
       const jwt = localStorage.getItem("jwt");
       const response = await axios.post("/api/internships/create", payload, {
         headers: {
-          'Authorization': `Bearer ${jwt}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
       });
-      
+
       // Show success message with approval notice
-      showSuccess("Internship posted successfully! Your internship is now pending admin approval. You will be notified once it's approved.");
+      showSuccess(
+        "Internship posted successfully! Your internship is now pending admin approval. You will be notified once it's approved."
+      );
       navigate("/p/internships");
     } catch (error) {
-      console.error("Internship creation failed", error.response?.data || error.message);
-      showError(error.response?.data?.error || "Failed to post internship. Please check all fields.");
+      console.error(
+        "Internship creation failed",
+        error.response?.data || error.message
+      );
+      showError(
+        error.response?.data?.error ||
+          "Failed to post internship. Please check all fields."
+      );
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-
-     {/* ⬅️ Back Button */}
+      {/* ⬅️ Back Button */}
       <button
         onClick={handleGoBack}
         className="flex items-center text-sm text-blue-600 hover:underline mb-4"
@@ -111,14 +129,20 @@ export default function PostInternship() {
         <ArrowLeft className="w-4 h-4 mr-1" />
         Go Back
       </button>
-      
+
       <h2 className="text-2xl font-bold mb-6">Post a New Internship</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="title" className="block mb-1 font-medium">
             Internship Title
           </label>
-          <Input id="title" name="title" value={form.title} onChange={handleChange} required />
+          <Input
+            id="title"
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div>
@@ -159,21 +183,41 @@ export default function PostInternship() {
           <label htmlFor="stipend" className="block mb-1 font-medium">
             Stipend (₹)
           </label>
-          <Input type="text" id="stipend" name="stipend" value={form.stipend} onChange={handleChange} required />
+          <Input
+            type="text"
+            id="stipend"
+            name="stipend"
+            value={form.stipend}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div>
           <label htmlFor="duration" className="block mb-1 font-medium">
             Duration
           </label>
-          <Input type="text" id="duration" name="duration" value={form.duration} onChange={handleChange} required />
+          <Input
+            type="text"
+            id="duration"
+            name="duration"
+            value={form.duration}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div>
           <label htmlFor="description" className="block mb-1 font-medium">
             Description
           </label>
-          <Textarea id="description" name="description" value={form.description} onChange={handleChange} required />
+          <Textarea
+            id="description"
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div>
@@ -204,14 +248,20 @@ export default function PostInternship() {
           <Checkbox
             id="remote_option"
             checked={form.remote_option}
-            onCheckedChange={(checked) => setForm((prev) => ({ ...prev, remote_option: checked }))}
+            onCheckedChange={(checked) =>
+              setForm((prev) => ({ ...prev, remote_option: checked }))
+            }
           />
           <label htmlFor="remote_option" className="font-medium">
             Remote Option Available
           </label>
         </div>
 
-        <Button type="submit" variant="default" className="bg-blue-500 hover:bg-blue-600 w-full">
+        <Button
+          type="submit"
+          variant="default"
+          className="bg-blue-500 hover:bg-blue-600 w-full"
+        >
           Post Internship
         </Button>
       </form>

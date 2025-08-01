@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FileText, UploadCloud, CheckCircle, XCircle } from "lucide-react";
-import { Button } from "../Components/ui/button";
-import { useToast } from "@/Components/common/ToastContext";
+import { Button } from "../components/ui/button";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function UploadResume() {
   const [file, setFile] = useState(null);
@@ -68,7 +68,9 @@ export default function UploadResume() {
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 space-y-6 border-t-8 border-blue-500">
         <div className="text-center">
           <FileText className="mx-auto text-blue-600 w-10 h-10 mb-2" />
-          <h2 className="text-2xl font-bold text-blue-800">Upload Your Resume</h2>
+          <h2 className="text-2xl font-bold text-blue-800">
+            Upload Your Resume
+          </h2>
           <p className="text-gray-500 text-sm">Only PDF files are supported</p>
         </div>
 
@@ -86,7 +88,13 @@ export default function UploadResume() {
             )}
             <span className="text-xs text-gray-500">Only PDF (Max 2MB)</span>
           </label>
-          <input type="file" id="resumeInput" accept=".pdf" onChange={handleFileChange} className="hidden" />
+          <input
+            type="file"
+            id="resumeInput"
+            accept=".pdf"
+            onChange={handleFileChange}
+            className="hidden"
+          />
         </div>
 
         {/* Status Feedback */}

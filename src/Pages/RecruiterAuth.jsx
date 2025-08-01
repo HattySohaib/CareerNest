@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
 // import { User } from "@/entities/User";
 import { Link, useNavigate } from "react-router-dom";
-import { createPageUrl } from "../Components/utils";
+import { createPageUrl } from "../components/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Eye, EyeOff, AlertCircle, Mail, Phone, CheckCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Mail,
+  Phone,
+  CheckCircle,
+} from "lucide-react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import { useToast } from "@/Components/common/ToastContext";
+import { useToast } from "@/components/common/ToastContext";
 
 export default function RecruiterAuth() {
   const navigate = useNavigate();
@@ -43,10 +57,13 @@ export default function RecruiterAuth() {
   //password generation
   const generatePassword = () => {
     const length = 12;
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]<>?,.";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]<>?,.";
     let result = "";
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
     }
     setFormData({ ...formData, password: result, confirm_password: result });
   };
@@ -77,7 +94,11 @@ export default function RecruiterAuth() {
       // Password strength logic
       if (value.length < 8) {
         setPasswordStrength("Weak");
-      } else if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(value)) {
+      } else if (
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(
+          value
+        )
+      ) {
         setPasswordStrength("Strong");
       } else {
         setPasswordStrength("Medium");
@@ -104,7 +125,10 @@ export default function RecruiterAuth() {
       const res = await fetch(`${backendURL}/api/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ credential: credentialResponse.credential, user_type: "recruiter" }),
+        body: JSON.stringify({
+          credential: credentialResponse.credential,
+          user_type: "recruiter",
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -146,7 +170,10 @@ export default function RecruiterAuth() {
         const res = await fetch(`${backendURL}/api/auth/recruiter/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: formData.email, password: formData.password }),
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
         });
 
         if (!res.ok) {
@@ -176,12 +203,13 @@ export default function RecruiterAuth() {
         localStorage.setItem("jwt", "mock-jwt-token");
       }
 
-
       window.location.href = createPageUrl("home");
     } catch (error) {
       setError(
         error.message ||
-          (loginMethod === "email" ? "Invalid email or password" : "Phone login failed. Please try again.")
+          (loginMethod === "email"
+            ? "Invalid email or password"
+            : "Phone login failed. Please try again.")
       );
       console.error("Login error:", error);
     } finally {
@@ -219,8 +247,14 @@ export default function RecruiterAuth() {
         return;
       }
       // Password regex: at least 8 chars, 1 letter, 1 number, 1 special char
-      if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(formData.password)) {
-        setError("Password must include a letter, a number, and a special character.");
+      if (
+        !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/.test(
+          formData.password
+        )
+      ) {
+        setError(
+          "Password must include a letter, a number, and a special character."
+        );
         return;
       }
 
@@ -249,12 +283,12 @@ export default function RecruiterAuth() {
       }
 
       const data = await res.json();
-      
+
       // On success, switch to sign-in mode and show a success message
       setIsLogin(true);
       setError("");
       setSuccessMessage("Registration successful! Please sign in to continue.");
-      
+
       // Clear the form data
       setFormData({
         full_name: "",
@@ -290,8 +324,12 @@ export default function RecruiterAuth() {
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Join CareerNest as a Recruiter</h1>
-            <p className="text-gray-600">Start posting jobs and connect with top talent across India</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Join CareerNest as a Recruiter
+            </h1>
+            <p className="text-gray-600">
+              Start posting jobs and connect with top talent across India
+            </p>
           </div>
 
           <Card className="shadow-xl">
@@ -331,10 +369,14 @@ export default function RecruiterAuth() {
               <form onSubmit={handleSignUp} className="space-y-6">
                 {/* Personal Information */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Personal Information
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name *
+                      </label>
                       <Input
                         name="full_name"
                         value={formData.full_name}
@@ -344,7 +386,9 @@ export default function RecruiterAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Work Email *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Work Email *
+                      </label>
                       <Input
                         name="email"
                         type="email"
@@ -355,7 +399,9 @@ export default function RecruiterAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
                       <Input
                         name="phone"
                         value={formData.phone}
@@ -365,7 +411,9 @@ export default function RecruiterAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Job Title
+                      </label>
                       <Input
                         name="job_title"
                         value={formData.job_title}
@@ -378,10 +426,14 @@ export default function RecruiterAuth() {
 
                 {/* Password Fields */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Account Security</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Account Security
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Password *
+                      </label>
                       <div className="relative">
                         <Input
                           name="password"
@@ -396,16 +448,24 @@ export default function RecruiterAuth() {
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                       <div className="mt-1 text-xs">
                         <span>Password strength: {passwordStrength}</span>
                       </div>
-                      <div className="mt-1 text-xs text-gray-500">{passwordMessage}</div>
+                      <div className="mt-1 text-xs text-gray-500">
+                        {passwordMessage}
+                      </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Confirm Password *
+                      </label>
                       <div className="relative">
                         <Input
                           name="confirm_password"
@@ -420,7 +480,11 @@ export default function RecruiterAuth() {
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          {showPassword ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                       <button
@@ -436,10 +500,14 @@ export default function RecruiterAuth() {
 
                 {/* Company Information */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Company Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Company Information
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Company Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Company Name *
+                      </label>
                       <Input
                         name="company_name"
                         value={formData.company_name}
@@ -449,10 +517,14 @@ export default function RecruiterAuth() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Company Size</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Company Size
+                      </label>
                       <Select
                         value={formData.company_size}
-                        onValueChange={(value) => handleSelectChange("company_size", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("company_size", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select company size" />
@@ -460,17 +532,25 @@ export default function RecruiterAuth() {
                         <SelectContent>
                           <SelectItem value="1-10">1-10 employees</SelectItem>
                           <SelectItem value="11-50">11-50 employees</SelectItem>
-                          <SelectItem value="51-200">51-200 employees</SelectItem>
-                          <SelectItem value="201-1000">201-1000 employees</SelectItem>
+                          <SelectItem value="51-200">
+                            51-200 employees
+                          </SelectItem>
+                          <SelectItem value="201-1000">
+                            201-1000 employees
+                          </SelectItem>
                           <SelectItem value="1000+">1000+ employees</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Industry</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Industry
+                      </label>
                       <Select
                         value={formData.industry}
-                        onValueChange={(value) => handleSelectChange("industry", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("industry", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select industry" />
@@ -480,7 +560,9 @@ export default function RecruiterAuth() {
                           <SelectItem value="Finance">Finance</SelectItem>
                           <SelectItem value="Healthcare">Healthcare</SelectItem>
                           <SelectItem value="Education">Education</SelectItem>
-                          <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                          <SelectItem value="Manufacturing">
+                            Manufacturing
+                          </SelectItem>
                           <SelectItem value="Retail">Retail</SelectItem>
                           <SelectItem value="Consulting">Consulting</SelectItem>
                           <SelectItem value="Other">Other</SelectItem>
@@ -488,10 +570,14 @@ export default function RecruiterAuth() {
                       </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Company Location</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Company Location
+                      </label>
                       <Select
                         value={formData.location}
-                        onValueChange={(value) => handleSelectChange("location", value)}
+                        onValueChange={(value) =>
+                          handleSelectChange("location", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select location" />
@@ -509,7 +595,9 @@ export default function RecruiterAuth() {
                   </div>
 
                   <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Company Website</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Company Website
+                    </label>
                     <Input
                       name="company_website"
                       value={formData.company_website}
@@ -519,7 +607,9 @@ export default function RecruiterAuth() {
                   </div>
 
                   <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Company Description</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Company Description
+                    </label>
                     <Textarea
                       name="company_description"
                       value={formData.company_description}
@@ -535,14 +625,18 @@ export default function RecruiterAuth() {
                   disabled={isLoading}
                   className="w-full bg-indigo-600 hover:bg-indigo-700 py-3 text-lg"
                 >
-                  {isLoading ? "Creating Account..." : "Create Recruiter Account"}
+                  {isLoading
+                    ? "Creating Account..."
+                    : "Create Recruiter Account"}
                 </Button>
 
                 {/* Google Sign Up */}
                 <GoogleOAuthProvider clientId={clientId}>
                   <GoogleLogin
                     onSuccess={handleGoogleLoginSuccess}
-                    onError={() => setError("Google signup failed. Please try again.")}
+                    onError={() =>
+                      setError("Google signup failed. Please try again.")
+                    }
                     width="100%"
                     useOneTap
                   />
@@ -573,15 +667,22 @@ export default function RecruiterAuth() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         {/* Back Button */}
-        <Link to={createPageUrl("Home")} className="flex items-center text-gray-600 hover:text-gray-900 mb-8">
+        <Link
+          to={createPageUrl("Home")}
+          className="flex items-center text-gray-600 hover:text-gray-900 mb-8"
+        >
           <ArrowLeft className="w-5 h-5 mr-2" />
           <span className="text-lg">Back</span>
         </Link>
 
         {/* Welcome Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back Recruiter!</h1>
-          <p className="text-gray-600">Welcome back! Please enter your details.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Welcome Back Recruiter!
+          </h1>
+          <p className="text-gray-600">
+            Welcome back! Please enter your details.
+          </p>
         </div>
 
         {/* Error Message */}
@@ -601,7 +702,9 @@ export default function RecruiterAuth() {
         {/* Login Form - Only Email Login Allowed */}
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
             <Input
               name="email"
               type="email"
@@ -613,7 +716,9 @@ export default function RecruiterAuth() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
             <div className="relative">
               <Input
                 name="password"
@@ -629,12 +734,20 @@ export default function RecruiterAuth() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
           <div className="text-right">
-            <button type="button" onClick={handleForgotPassword} className="text-sm text-gray-600 hover:text-gray-900">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sm text-gray-600 hover:text-gray-900"
+            >
               Forgot password
             </button>
           </div>
@@ -659,7 +772,10 @@ export default function RecruiterAuth() {
         <div className="text-center mt-8">
           <p className="text-gray-600">
             Don't have an account?{" "}
-            <button onClick={() => setIsLogin(false)} className="font-semibold text-gray-900 hover:text-blue-600">
+            <button
+              onClick={() => setIsLogin(false)}
+              className="font-semibold text-gray-900 hover:text-blue-600"
+            >
               Sign up for free
             </button>
           </p>

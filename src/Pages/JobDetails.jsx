@@ -4,11 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  MapPin, IndianRupee, Clock, Building, Users, CheckCircle, ArrowLeft,
+  MapPin,
+  IndianRupee,
+  Clock,
+  Building,
+  Users,
+  CheckCircle,
+  ArrowLeft,
 } from "lucide-react";
-import { createPageUrl } from "../Components/utils";
-import LoadingSpinner from "../Components/common/LoadingSpinner";
-import ApplicationForm from "../Components/jobs/ApplicationForm";
+import { createPageUrl } from "../components/utils";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import ApplicationForm from "../components/jobs/ApplicationForm";
 
 export default function JobDetails() {
   const { jobId } = useParams();
@@ -76,18 +82,20 @@ export default function JobDetails() {
     setApplicationMessage(message);
     setApplicationStatus(type);
     setShowApplicationForm(false);
-    
+
     if (type === "success") {
       // Navigate to My Applications after a delay
       setTimeout(() => {
-        navigate('/p/applications');
+        navigate("/p/applications");
       }, 2000);
     }
   };
 
   const formatSalary = (min, max) => {
     if (min && max) {
-      return `₹${(min / 100000).toFixed(1)}L - ₹${(max / 100000).toFixed(1)}L per annum`;
+      return `₹${(min / 100000).toFixed(1)}L - ₹${(max / 100000).toFixed(
+        1
+      )}L per annum`;
     }
     if (min) {
       return `₹${(min / 100000).toFixed(1)}L+ per annum`;
@@ -95,40 +103,40 @@ export default function JobDetails() {
     if (max) {
       return `Up to ₹${(max / 100000).toFixed(1)}L per annum`;
     }
-    return 'Not specified';
+    return "Not specified";
   };
 
   // Helper to format stipend in thousands (K)
   const formatStipend = (stipend) => {
-    if (!stipend) return 'Not specified';
-    
+    if (!stipend) return "Not specified";
+
     // Handle different stipend formats
     const stipendStr = stipend.toString().trim();
-    
+
     // If it's already in a readable format with ₹ symbol, return as is
-    if (stipendStr.includes('₹')) {
+    if (stipendStr.includes("₹")) {
       return stipendStr;
     }
-    
+
     // Extract numeric part from stipend string (handle formats like "10,000/month")
-    const match = stipendStr.replace(/,/g, '').match(/(\d+)/);
+    const match = stipendStr.replace(/,/g, "").match(/(\d+)/);
     if (match) {
       const value = parseInt(match[1], 10);
       if (!isNaN(value)) {
         // Check if the original string has "/month" or similar
-        if (stipendStr.includes('/month') || stipendStr.includes('/mo')) {
+        if (stipendStr.includes("/month") || stipendStr.includes("/mo")) {
           return `₹${(value / 1000).toFixed(1)}K/month`;
         }
         return `₹${(value / 1000).toFixed(1)}K`;
       }
     }
-    
+
     // If it's a simple number, format it
     const numValue = parseFloat(stipendStr);
     if (!isNaN(numValue)) {
       return `₹${(numValue / 1000).toFixed(1)}K`;
     }
-    
+
     return stipendStr; // fallback to original if not a number
   };
 
@@ -146,10 +154,16 @@ export default function JobDetails() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Job Not Found</h2>
-          <p className="text-gray-600 mb-6">The job you're looking for doesn't exist or has been removed.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Job Not Found
+          </h2>
+          <p className="text-gray-600 mb-6">
+            The job you're looking for doesn't exist or has been removed.
+          </p>
           <Link to={createPageUrl("Jobs")}>
-            <Button className="bg-blue-600 hover:bg-blue-700">Browse All Jobs</Button>
+            <Button className="bg-blue-600 hover:bg-blue-700">
+              Browse All Jobs
+            </Button>
           </Link>
         </div>
       </div>
@@ -161,18 +175,24 @@ export default function JobDetails() {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
-            <Button variant="outline" onClick={() => setShowApplicationForm(false)} className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowApplicationForm(false)}
+              className="flex items-center space-x-2"
+            >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Job Details</span>
             </Button>
           </div>
 
           {applicationMessage && (
-            <div className={`mb-6 p-4 rounded-lg ${
-              applicationStatus === "error" 
-                ? "bg-red-100 border border-red-400 text-red-700"
-                : "bg-green-100 border border-green-400 text-green-700"
-            }`}>
+            <div
+              className={`mb-6 p-4 rounded-lg ${
+                applicationStatus === "error"
+                  ? "bg-red-100 border border-red-400 text-red-700"
+                  : "bg-green-100 border border-green-400 text-green-700"
+              }`}
+            >
               {applicationMessage}
             </div>
           )}
@@ -220,27 +240,54 @@ export default function JobDetails() {
             <CardContent className="p-6">
               <div className="flex items-start space-x-4 mb-6">
                 {job.company_logo && (
-                  <img src={job.company_logo} alt={job.company} className="w-16 h-16 rounded-xl object-cover" />
+                  <img
+                    src={job.company_logo}
+                    alt={job.company}
+                    className="w-16 h-16 rounded-xl object-cover"
+                  />
                 )}
                 <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{job.title}</h1>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    {job.title}
+                  </h1>
                   <div className="flex items-center space-x-2 text-lg text-gray-600 mb-4">
                     <Building className="w-5 h-5" />
                     <span className="font-medium">{job.company}</span>
                   </div>
                   <div className="flex flex-wrap gap-4 text-gray-600">
-                    <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" />{job.location}</span>
-                    <span className="flex items-center"><Clock className="w-4 h-4 mr-1" />{job.job_type}</span>
-                    <span className="flex items-center text-green-600 font-semibold"><IndianRupee className="w-4 h-4 mr-1" />{displayCompensation()}</span>
+                    <span className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      {job.location}
+                    </span>
+                    <span className="flex items-center">
+                      <Clock className="w-4 h-4 mr-1" />
+                      {job.job_type}
+                    </span>
+                    <span className="flex items-center text-green-600 font-semibold">
+                      <IndianRupee className="w-4 h-4 mr-1" />
+                      {displayCompensation()}
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-6">
-                <Badge className="bg-blue-100 text-blue-800">{job.experience_level}</Badge>
-                {job.remote_option && <Badge className="bg-green-100 text-green-800">Remote Available</Badge>}
+                <Badge className="bg-blue-100 text-blue-800">
+                  {job.experience_level}
+                </Badge>
+                {job.remote_option && (
+                  <Badge className="bg-green-100 text-green-800">
+                    Remote Available
+                  </Badge>
+                )}
                 {job.skills?.slice(0, 5).map((skill, index) => (
-                  <Badge key={index} variant="outline" className="text-blue-600 border-blue-600">{skill}</Badge>
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    className="text-blue-600 border-blue-600"
+                  >
+                    {skill}
+                  </Badge>
                 ))}
               </div>
 
@@ -258,16 +305,22 @@ export default function JobDetails() {
 
           {/* Job Description */}
           <Card>
-            <CardHeader><CardTitle>Job Description</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Job Description</CardTitle>
+            </CardHeader>
             <CardContent>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">{job.description}</p>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                {job.description}
+              </p>
             </CardContent>
           </Card>
 
           {/* Requirements */}
           {job.requirements?.length > 0 && (
             <Card>
-              <CardHeader><CardTitle>Requirements</CardTitle></CardHeader>
+              <CardHeader>
+                <CardTitle>Requirements</CardTitle>
+              </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   {job.requirements.map((req, i) => (
@@ -284,7 +337,9 @@ export default function JobDetails() {
           {/* Benefits */}
           {job.benefits?.length > 0 && (
             <Card>
-              <CardHeader><CardTitle>Benefits & Perks</CardTitle></CardHeader>
+              <CardHeader>
+                <CardTitle>Benefits & Perks</CardTitle>
+              </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   {job.benefits.map((benefit, i) => (
@@ -303,7 +358,9 @@ export default function JobDetails() {
         <div className="space-y-6">
           {/* Quick Apply */}
           <Card>
-            <CardHeader><CardTitle>Quick Apply</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Quick Apply</CardTitle>
+            </CardHeader>
             <CardContent>
               <Button
                 onClick={() => {
@@ -322,24 +379,57 @@ export default function JobDetails() {
 
           {/* Summary */}
           <Card>
-            <CardHeader><CardTitle>Job Summary</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Job Summary</CardTitle>
+            </CardHeader>
             <CardContent className="space-y-4">
-              <div><h4 className="font-medium text-gray-900 mb-1">Experience Level</h4><p className="text-gray-600">{job.experience_level}</p></div>
-              <div><h4 className="font-medium text-gray-900 mb-1">Job Type</h4><p className="text-gray-600">{job.job_type}</p></div>
-              <div><h4 className="font-medium text-gray-900 mb-1">Location</h4><p className="text-gray-600">{job.location}</p></div>
-              <div><h4 className="font-medium text-gray-900 mb-1">Salary / Stipend</h4><p className="text-gray-600">{displayCompensation()}</p></div>
-              {job.remote_option && <div><h4 className="font-medium text-gray-900 mb-1">Remote Work</h4><p className="text-green-600">Available</p></div>}
+              <div>
+                <h4 className="font-medium text-gray-900 mb-1">
+                  Experience Level
+                </h4>
+                <p className="text-gray-600">{job.experience_level}</p>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-1">Job Type</h4>
+                <p className="text-gray-600">{job.job_type}</p>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-1">Location</h4>
+                <p className="text-gray-600">{job.location}</p>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-1">
+                  Salary / Stipend
+                </h4>
+                <p className="text-gray-600">{displayCompensation()}</p>
+              </div>
+              {job.remote_option && (
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">
+                    Remote Work
+                  </h4>
+                  <p className="text-green-600">Available</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
           {/* Skills */}
           {job.skills?.length > 0 && (
             <Card>
-              <CardHeader><CardTitle>Skills Required</CardTitle></CardHeader>
+              <CardHeader>
+                <CardTitle>Skills Required</CardTitle>
+              </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {job.skills.map((skill, i) => (
-                    <Badge key={i} variant="outline" className="text-blue-600 border-blue-600">{skill}</Badge>
+                    <Badge
+                      key={i}
+                      variant="outline"
+                      className="text-blue-600 border-blue-600"
+                    >
+                      {skill}
+                    </Badge>
                   ))}
                 </div>
               </CardContent>

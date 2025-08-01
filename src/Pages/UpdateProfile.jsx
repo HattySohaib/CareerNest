@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "../Components/ui/input";
-import { Button } from "../Components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../Components/ui/select";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select";
 import { useNavigate } from "react-router-dom";
 
 export default function UpdateProfile() {
@@ -102,7 +108,11 @@ export default function UpdateProfile() {
     const clean = {};
     for (const key in data) {
       if (data[key] === null || data[key] === undefined) continue;
-      if (typeof data[key] === "object" && !Array.isArray(data[key]) && data[key] !== null) {
+      if (
+        typeof data[key] === "object" &&
+        !Array.isArray(data[key]) &&
+        data[key] !== null
+      ) {
         // Only keep address if it has at least one string value
         const nested = {};
         for (const k in data[key]) {
@@ -143,14 +153,17 @@ export default function UpdateProfile() {
 
   async function sendUpdate(updateData, jwt) {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || ""}/api/user/profile`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-        body: JSON.stringify(updateData),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL || ""}/api/user/profile`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify(updateData),
+        }
+      );
       if (!res.ok) {
         const err = await res.json();
         setError(err.error || "Profile update failed");
@@ -158,7 +171,8 @@ export default function UpdateProfile() {
       }
       setSuccess("Profile updated successfully!");
       const userRole = profile.role || localStorage.getItem("userRole");
-      const redirectPath = userRole === "recruiter" ? "/p/recruiterprofileview" : "/p/profileview";
+      const redirectPath =
+        userRole === "recruiter" ? "/p/recruiterprofileview" : "/p/profileview";
       setTimeout(() => navigate(redirectPath), 1200);
     } catch (err) {
       setError("Profile update failed");
@@ -178,7 +192,11 @@ export default function UpdateProfile() {
             {/* Avatar Circle */}
             <div className="w-32 h-32 rounded-full overflow-hidden border-[3px] border-blue-500 shadow-xl transition duration-300 transform hover:scale-105 ring-4 ring-blue-100">
               {previewUrl ? (
-                <img src={previewUrl} alt="Profile" className="w-full h-full object-cover" />
+                <img
+                  src={previewUrl}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 text-gray-500 font-medium">
                   Upload
@@ -199,20 +217,47 @@ export default function UpdateProfile() {
             className="hidden"
           />
           {/* Optional: Hint Text */}
-          <p className="text-sm text-gray-500">Tap the photo to upload or update</p>
+          <p className="text-sm text-gray-500">
+            Tap the photo to upload or update
+          </p>
         </div>
-        <h1 className="text-3xl font-bold text-center text-blue-800 mt-6 mb-6">📝 Update Profile</h1>
-        {success && <div className="text-green-600 text-center mb-4">{success}</div>}
+        <h1 className="text-3xl font-bold text-center text-blue-800 mt-6 mb-6">
+          📝 Update Profile
+        </h1>
+        {success && (
+          <div className="text-green-600 text-center mb-4">{success}</div>
+        )}
         {error && <div className="text-red-600 text-center mb-4">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Demographic Info */}
           <div>
-            <h2 className="text-xl font-semibold text-blue-600 mb-2">Demographic Info</h2>
+            <h2 className="text-xl font-semibold text-blue-600 mb-2">
+              Demographic Info
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input name="name" value={profile.name} onChange={handleChange} placeholder="Full Name" />
-              <Input name="email" value={profile.email} onChange={handleChange} placeholder="Email" disabled />
-              <Input name="phone" value={profile.phone} onChange={handleChange} placeholder="Phone Number" />
-              <Select value={profile.gender} onValueChange={(val) => handleSelectChange("gender", val)}>
+              <Input
+                name="name"
+                value={profile.name}
+                onChange={handleChange}
+                placeholder="Full Name"
+              />
+              <Input
+                name="email"
+                value={profile.email}
+                onChange={handleChange}
+                placeholder="Email"
+                disabled
+              />
+              <Input
+                name="phone"
+                value={profile.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+              />
+              <Select
+                value={profile.gender}
+                onValueChange={(val) => handleSelectChange("gender", val)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Gender" />
                 </SelectTrigger>
@@ -226,7 +271,9 @@ export default function UpdateProfile() {
           </div>
           {/* Address Info */}
           <div>
-            <h2 className="text-xl font-semibold text-blue-600 mb-2">Address</h2>
+            <h2 className="text-xl font-semibold text-blue-600 mb-2">
+              Address
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 name="street"
@@ -258,7 +305,9 @@ export default function UpdateProfile() {
           {userRole === "recruiter" ? (
             <>
               <div>
-                <h2 className="text-xl font-semibold text-blue-600 mb-2">Company Details</h2>
+                <h2 className="text-xl font-semibold text-blue-600 mb-2">
+                  Company Details
+                </h2>
                 <Input
                   name="company_name"
                   value={profile.company_name}
@@ -271,8 +320,18 @@ export default function UpdateProfile() {
                   onChange={handleChange}
                   placeholder="Company Size"
                 />
-                <Input name="industry" value={profile.industry} onChange={handleChange} placeholder="Industry" />
-                <Input name="job_title" value={profile.job_title} onChange={handleChange} placeholder="Job Title" />
+                <Input
+                  name="industry"
+                  value={profile.industry}
+                  onChange={handleChange}
+                  placeholder="Industry"
+                />
+                <Input
+                  name="job_title"
+                  value={profile.job_title}
+                  onChange={handleChange}
+                  placeholder="Job Title"
+                />
                 <Input
                   name="company_website"
                   value={profile.company_website}
@@ -285,13 +344,20 @@ export default function UpdateProfile() {
                   onChange={handleChange}
                   placeholder="Company Description"
                 />
-                <Input name="location" value={profile.location} onChange={handleChange} placeholder="Location" />
+                <Input
+                  name="location"
+                  value={profile.location}
+                  onChange={handleChange}
+                  placeholder="Location"
+                />
               </div>
             </>
           ) : (
             <>
               <div>
-                <h2 className="text-xl font-semibold text-blue-600 mb-2">College Details</h2>
+                <h2 className="text-xl font-semibold text-blue-600 mb-2">
+                  College Details
+                </h2>
                 <Input
                   name="collegeName"
                   value={profile.collegeName}
@@ -300,7 +366,12 @@ export default function UpdateProfile() {
                   className="mb-3"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Select value={profile.programme} onValueChange={(val) => handleSelectChange("programme", val)}>
+                  <Select
+                    value={profile.programme}
+                    onValueChange={(val) =>
+                      handleSelectChange("programme", val)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Programme" />
                     </SelectTrigger>
@@ -311,7 +382,10 @@ export default function UpdateProfile() {
                       <SelectItem value="PhD">PhD</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Select value={profile.branch} onValueChange={(val) => handleSelectChange("branch", val)}>
+                  <Select
+                    value={profile.branch}
+                    onValueChange={(val) => handleSelectChange("branch", val)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Branch" />
                     </SelectTrigger>
@@ -324,7 +398,10 @@ export default function UpdateProfile() {
                       <SelectItem value="CE">CE</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Select value={profile.year} onValueChange={(val) => handleSelectChange("year", val)}>
+                  <Select
+                    value={profile.year}
+                    onValueChange={(val) => handleSelectChange("year", val)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Passing Year" />
                     </SelectTrigger>
@@ -347,9 +424,16 @@ export default function UpdateProfile() {
           {userRole === "student" ? (
             <>
               <div>
-                <h2 className="text-xl font-semibold text-blue-600 mb-2">Social Media Links</h2>
+                <h2 className="text-xl font-semibold text-blue-600 mb-2">
+                  Social Media Links
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input name="github" value={profile.github} onChange={handleChange} placeholder="GitHub Profile" />
+                  <Input
+                    name="github"
+                    value={profile.github}
+                    onChange={handleChange}
+                    placeholder="GitHub Profile"
+                  />
                   <Input
                     name="linkedin"
                     value={profile.linkedin}
@@ -368,7 +452,12 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                     placeholder="Instagram Profile"
                   />
-                  <Input name="twitter" value={profile.twitter} onChange={handleChange} placeholder="Twitter Profile" />
+                  <Input
+                    name="twitter"
+                    value={profile.twitter}
+                    onChange={handleChange}
+                    placeholder="Twitter Profile"
+                  />
                   <Input
                     name="portfolio"
                     value={profile.portfolio}
@@ -381,7 +470,9 @@ export default function UpdateProfile() {
           ) : (
             <>
               <div>
-                <h2 className="text-xl font-semibold text-blue-600 mb-2">Social Media Links</h2>
+                <h2 className="text-xl font-semibold text-blue-600 mb-2">
+                  Social Media Links
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input
                     name="linkedin"
@@ -401,14 +492,21 @@ export default function UpdateProfile() {
                     onChange={handleChange}
                     placeholder="Instagram Profile"
                   />
-                  <Input name="twitter" value={profile.twitter} onChange={handleChange} placeholder="Twitter Profile" />
+                  <Input
+                    name="twitter"
+                    value={profile.twitter}
+                    onChange={handleChange}
+                    placeholder="Twitter Profile"
+                  />
                 </div>
               </div>
             </>
           )}
           {/* About Me */}
           <div>
-            <h2 className="text-xl font-semibold text-blue-600 mb-2">About Me</h2>
+            <h2 className="text-xl font-semibold text-blue-600 mb-2">
+              About Me
+            </h2>
             <textarea
               name="about"
               value={profile.about}

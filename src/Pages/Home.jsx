@@ -1,10 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { createPageUrl } from "../Components/utils";
+import { createPageUrl } from "../components/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Briefcase, Users, TrendingUp, Building, ArrowRight, IndianRupee } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  Users,
+  TrendingUp,
+  Building,
+  ArrowRight,
+  IndianRupee,
+} from "lucide-react";
 
 export default function Home() {
   const featuredJobs = [
@@ -43,9 +52,15 @@ export default function Home() {
     { name: "Microsoft", logo: "https://logo.clearbit.com/microsoft.com" },
     { name: "Cognizant", logo: "https://logo.clearbit.com/cognizant.com" },
     { name: "Deloitte", logo: "https://logo.clearbit.com/deloitte.com" },
-    { name: "United Nations Volunteers", logo: "https://logo.clearbit.com/unv.org" },
+    {
+      name: "United Nations Volunteers",
+      logo: "https://logo.clearbit.com/unv.org",
+    },
     { name: "VSO ", logo: "https://logo.clearbit.com/vsointernational.org" },
-    { name: "The Intern Group", logo: "https://logo.clearbit.com/theinterngroup.com" },
+    {
+      name: "The Intern Group",
+      logo: "https://logo.clearbit.com/theinterngroup.com",
+    },
     { name: "Amazon", logo: "https://logo.clearbit.com/amazon.com" },
     { name: "Facebook", logo: "https://logo.clearbit.com/facebook.com" },
     { name: "Apple", logo: "https://logo.clearbit.com/apple.com" },
@@ -54,15 +69,24 @@ export default function Home() {
     { name: "Flipkart", logo: "https://logo.clearbit.com/flipkart.com" },
     { name: "Capgemini", logo: "https://logo.clearbit.com/capgemini.com" },
     { name: "Oracle", logo: "https://logo.clearbit.com/oracle.com" },
-    { name: "Volunteer World", logo: "https://logo.clearbit.com/volunteerworld.com" },
-    { name: "Projects Abroad", logo: "https://logo.clearbit.com/projects-abroad.org" },
+    {
+      name: "Volunteer World",
+      logo: "https://logo.clearbit.com/volunteerworld.com",
+    },
+    {
+      name: "Projects Abroad",
+      logo: "https://logo.clearbit.com/projects-abroad.org",
+    },
     { name: "AIESEC", logo: "https://logo.clearbit.com/aiesec.org" },
     { name: "SAP", logo: "https://logo.clearbit.com/sap.com" },
     { name: "Adobe", logo: "https://logo.clearbit.com/adobe.com" },
     { name: "Cisco", logo: "https://logo.clearbit.com/cisco.com" },
     { name: "Intel", logo: "https://logo.clearbit.com/intel.com" },
     { name: "Salesforce", logo: "https://logo.clearbit.com/salesforce.com" },
-    { name: "World Endeavors", logo: "https://logo.clearbit.com/worldendeavors.com" },
+    {
+      name: "World Endeavors",
+      logo: "https://logo.clearbit.com/worldendeavors.com",
+    },
     { name: "Frontier", logo: "https://logo.clearbit.com/bestgapyear.co.uk" },
   ];
   // Duplicate companies for seamless infinite scroll
@@ -75,10 +99,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Find Your Dream Internship and Volunteering Opportunity <span className="text-yellow-400">WorldWide</span>
+              Find Your Dream Internship and Volunteering Opportunity{" "}
+              <span className="text-yellow-400">WorldWide</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              Connect with leading companies, startups, universities & NGOs around the world-remote or on‑site.
+              Connect with leading companies, startups, universities & NGOs
+              around the world-remote or on‑site.
             </p>
 
             {/* Search Bar */}
@@ -174,18 +200,31 @@ export default function Home() {
       <section className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Internships</h2>
-            <p className="text-xl text-gray-600">Discover opportunities from top companies across India</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Featured Internships
+            </h2>
+            <p className="text-xl text-gray-600">
+              Discover opportunities from top companies across India
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {featuredJobs.map((job, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+              <Card
+                key={index}
+                className="hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+              >
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
-                    <img src={job.logo} alt={job.company} className="w-12 h-12 rounded-lg object-cover" />
+                    <img
+                      src={job.logo}
+                      alt={job.company}
+                      className="w-12 h-12 rounded-lg object-cover"
+                    />
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg text-gray-900 mb-1">{job.title}</h3>
+                      <h3 className="font-semibold text-lg text-gray-900 mb-1">
+                        {job.title}
+                      </h3>
                       <p className="text-gray-600 mb-2">{job.company}</p>
                       <div className="flex items-center space-x-4 text-sm text-gray-500 mb-3">
                         <span className="flex items-center">
@@ -200,7 +239,10 @@ export default function Home() {
                           {job.salary}
                         </span>
                         <Link to={createPageUrl("Internships")}>
-                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                          <Button
+                            size="sm"
+                            className="bg-blue-600 hover:bg-blue-700"
+                          >
                             Apply Now
                           </Button>
                         </Link>
@@ -227,8 +269,12 @@ export default function Home() {
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Top Companies Hiring</h2>
-            <p className="text-xl text-gray-600">Join thousands of professionals at World's leading companies</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Top Companies Hiring
+            </h2>
+            <p className="text-xl text-gray-600">
+              Join thousands of professionals at World's leading companies
+            </p>
           </div>
 
           <div className="overflow-x-hidden w-full">
@@ -248,7 +294,8 @@ export default function Home() {
                       className="w-16 h-16 object-contain"
                       style={{ background: "#fff" }}
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/64?text=Logo";
+                        e.target.src =
+                          "https://via.placeholder.com/64?text=Logo";
                       }}
                     />
                   </div>

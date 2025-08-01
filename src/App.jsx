@@ -1,41 +1,41 @@
 import React from "react";
 import Layout, { AdminLayout } from "./layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastProvider } from "./Components/common/ToastContext";
-import Home from "./Pages/Home";
-import About from "./Pages/About";
-import FAQ from "./Pages/FAQ";
-import Jobs from "./Pages/Jobs";
-import Internships from "./Pages/Internships";
-import JobDetails from "./Pages/JobDetails";
-import StudentAuth from "./Pages/StudentAuth";
-import RecruiterAuth from "./Pages/RecruiterAuth";
-import RecruiterDashboard from "./Pages/RecruiterDashboard";
-import StudentDashboard from "./Pages/StudentDashboard";
+import { ToastProvider } from "./components/common/ToastContext";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import FAQ from "./pages/FAQ";
+import Jobs from "./pages/Jobs";
+import Internships from "./pages/Internships";
+import JobDetails from "./pages/JobDetails";
+import StudentAuth from "./pages/StudentAuth";
+import RecruiterAuth from "./pages/RecruiterAuth";
+import RecruiterDashboard from "./pages/RecruiterDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
 import StudentLayout from "./StudentLayout";
 import RecruiterLayout from "./RecruiterLayout";
-import ResumeBuilder from "./Pages/ResumeBuilder";
-import UpdateProfile from "./Pages/UpdateProfile";
-import UploadResume from "./Pages/UploadResume";
-import MyApplications from "./Pages/MyApplications";
-import PostJobs from "./Pages/PostJobs";
-import PostInternship from "./Pages/PostInternship";
-import ProtectedRoute from "./Components/auth/ProtectedRoute";
-import SettingsPage from "./Pages/SettingsPage";
-import RecruiterSettings from "./Pages/RecruiterSettings";
-import AdminPage from "./Pages/Admin";
-import AdminSettings from "./Pages/AdminSettings";
-import ProfileView from "./Pages/ProfileView";
-import ManageJobs from "./Pages/ManageJobs";
-import EditJob from "./Pages/EditJob";
-import Analytics from "./Pages/Analytics";
-import AdminAuth from "./Pages/AdminAuth";
-import Applications from "./Pages/Applications";
-import Preparation from "./Pages/Preparation";
-import Hackathons from "./Pages/Hackathons";
-import ManageInternships from "./Pages/ManageInternships";
-import EditInternship from "./Pages/EditInternship";
-import InternshipDetails from "./Pages/InternshipDetails";
+import ResumeBuilder from "./pages/ResumeBuilder";
+import UpdateProfile from "./pages/UpdateProfile";
+import UploadResume from "./pages/UploadResume";
+import MyApplications from "./pages/MyApplications";
+import PostJobs from "./pages/PostJobs";
+import PostInternship from "./pages/PostInternship";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import SettingsPage from "./pages/SettingsPage";
+import RecruiterSettings from "./pages/RecruiterSettings";
+import AdminPage from "./pages/Admin";
+import AdminSettings from "./pages/AdminSettings";
+import ProfileView from "./pages/ProfileView";
+import ManageJobs from "./pages/ManageJobs";
+import EditJob from "./pages/EditJob";
+import Analytics from "./pages/Analytics";
+import AdminAuth from "./pages/AdminAuth";
+import Applications from "./pages/Applications";
+import Preparation from "./pages/Preparation";
+import Hackathons from "./pages/Hackathons";
+import ManageInternships from "./pages/ManageInternships";
+import EditInternship from "./pages/EditInternship";
+import InternshipDetails from "./pages/InternshipDetails";
 
 export default function App() {
   return (
@@ -102,7 +102,9 @@ export default function App() {
                 <StudentLayout>
                   <div className="text-center py-20">
                     <h1 className="text-2xl font-bold mb-4">Contact Us</h1>
-                    <p className="text-gray-600">Get in touch with our support team.</p>
+                    <p className="text-gray-600">
+                      Get in touch with our support team.
+                    </p>
                   </div>
                 </StudentLayout>
               </ProtectedRoute>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import LoadingSpinner from "../Components/common/LoadingSpinner";
-import JobCard from "../Components/jobs/JobCard";
-import Chatbot from "../Components/Chatbot";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import JobCard from "../components/jobs/JobCard";
+import Chatbot from "../components/Chatbot";
 
 export default function StudentDashboard() {
   const [internships, setInternships] = useState([]);
@@ -39,14 +39,19 @@ export default function StudentDashboard() {
 
   const loadInternships = async () => {
     try {
-      const response = await fetch("https://app.base44.com/api/apps/687508e8c02e10285e949016/entities/Job", {
-        headers: {
-          api_key: "fc6a61ef692346c9b3d1d0749378bd8e",
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://app.base44.com/api/apps/687508e8c02e10285e949016/entities/Job",
+        {
+          headers: {
+            api_key: "fc6a61ef692346c9b3d1d0749378bd8e",
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
-      const internshipJobs = data.filter((job) => job.job_type === "Internship");
+      const internshipJobs = data.filter(
+        (job) => job.job_type === "Internship"
+      );
       setInternships(internshipJobs);
     } catch (error) {
       console.error("Error loading internships:", error);
@@ -64,15 +69,20 @@ export default function StudentDashboard() {
         <div className="flex flex-col">
           <main className="p-6">
             <div className="bg-blue-100 border-l-4 border-blue-400 shadow p-6 rounded-xl mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome, Username! 👋</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                Welcome, Username! 👋
+              </h2>
               <p className="text-gray-600 text-sm">
-                Explore the latest internships and build your career with confidence
+                Explore the latest internships and build your career with
+                confidence
               </p>
             </div>
 
             {/* Featured Opportunities */}
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">Featured Opportunities</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                Featured Opportunities
+              </h3>
               <div className="space-y-4 max-w-4xl w-full mx-auto px-2">
                 {internships.slice(0, 6).map((internship) => (
                   <JobCard key={internship.id} job={internship} />

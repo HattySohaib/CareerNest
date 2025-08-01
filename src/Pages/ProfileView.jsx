@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../Components/ui/button";
+import { Button } from "../components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Card, CardHeader, CardTitle, CardContent } from "../Components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "../components/ui/card";
 import {
   Facebook,
   Github,
@@ -47,10 +52,18 @@ export default function ProfileView() {
   }, []);
 
   if (error) {
-    return <div className="min-h-screen flex items-center justify-center text-red-600">{error}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600">
+        {error}
+      </div>
+    );
   }
   if (!profile) {
-    return <div className="min-h-screen flex items-center justify-center text-gray-500">Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-500">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -69,7 +82,9 @@ export default function ProfileView() {
               </div>
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">{profile.name}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            {profile.name}
+          </h1>
           <div className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg mb-4">
             {userRole === "recruiter" ? "Recruiter" : "Student"}
           </div>
@@ -111,12 +126,16 @@ export default function ProfileView() {
 
             {/* Education Section */}
             <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Education</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Education
+              </h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                   <div>
-                    <h3 className="text-gray-900 font-semibold">{profile.collegeName}</h3>
+                    <h3 className="text-gray-900 font-semibold">
+                      {profile.collegeName}
+                    </h3>
                     <p className="text-gray-600 text-sm">
                       {profile.programme && profile.branch
                         ? `${profile.programme}, ${profile.branch}`
@@ -130,14 +149,20 @@ export default function ProfileView() {
 
             {/* Experience Section */}
             <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Experience</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Experience
+              </h2>
               <div className="space-y-4">
                 {userRole === "recruiter" ? (
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
-                      <h3 className="text-gray-900 font-semibold">{profile.job_title || "Job Title"}</h3>
-                      <p className="text-gray-600 text-sm mb-2">{profile.company_name || "Company Name"}</p>
+                      <h3 className="text-gray-900 font-semibold">
+                        {profile.job_title || "Job Title"}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-2">
+                        {profile.company_name || "Company Name"}
+                      </p>
                       <p className="text-gray-600 text-sm">
                         {profile.company_description ||
                           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
@@ -149,9 +174,12 @@ export default function ProfileView() {
                     <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-gray-900 font-semibold">Student</h3>
-                      <p className="text-gray-600 text-sm mb-2">{profile.collegeName || "University"}</p>
+                      <p className="text-gray-600 text-sm mb-2">
+                        {profile.collegeName || "University"}
+                      </p>
                       <p className="text-gray-600 text-sm">
-                        Currently pursuing {profile.programme || "degree"} in {profile.branch || "field of study"}.
+                        Currently pursuing {profile.programme || "degree"} in{" "}
+                        {profile.branch || "field of study"}.
                       </p>
                     </div>
                   </div>
@@ -162,7 +190,9 @@ export default function ProfileView() {
             {/* Detailed Information Section */}
             <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                {userRole === "recruiter" ? "Company Details" : "College Details"}
+                {userRole === "recruiter"
+                  ? "Company Details"
+                  : "College Details"}
               </h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {userRole === "recruiter" ? (
@@ -171,48 +201,64 @@ export default function ProfileView() {
                       <Building className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Company Name</p>
-                        <p className="text-gray-900 font-medium">{profile.company_name || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.company_name || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Users className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Company Size</p>
-                        <p className="text-gray-900 font-medium">{profile.company_size || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.company_size || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Industry</p>
-                        <p className="text-gray-900 font-medium">{profile.industry || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.industry || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Job Title</p>
-                        <p className="text-gray-900 font-medium">{profile.job_title || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.job_title || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <GlobeIcon className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Website</p>
-                        <p className="text-gray-900 font-medium">{profile.company_website || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.company_website || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <MapPin className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Location</p>
-                        <p className="text-gray-900 font-medium">{profile.location || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.location || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     {profile.company_description && (
                       <div className="md:col-span-2">
-                        <p className="text-gray-500 text-sm mb-2">Description</p>
-                        <p className="text-gray-600 text-sm">{profile.company_description}</p>
+                        <p className="text-gray-500 text-sm mb-2">
+                          Description
+                        </p>
+                        <p className="text-gray-600 text-sm">
+                          {profile.company_description}
+                        </p>
                       </div>
                     )}
                   </>
@@ -222,28 +268,36 @@ export default function ProfileView() {
                       <Building className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">College Name</p>
-                        <p className="text-gray-900 font-medium">{profile.collegeName || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.collegeName || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Programme</p>
-                        <p className="text-gray-900 font-medium">{profile.programme || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.programme || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Branch</p>
-                        <p className="text-gray-900 font-medium">{profile.branch || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.branch || "Not specified"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-blue-500" />
                       <div>
                         <p className="text-gray-500 text-sm">Passing Year</p>
-                        <p className="text-gray-900 font-medium">{profile.year || "Not specified"}</p>
+                        <p className="text-gray-900 font-medium">
+                          {profile.year || "Not specified"}
+                        </p>
                       </div>
                     </div>
                   </>
@@ -254,13 +308,16 @@ export default function ProfileView() {
             {/* Address Section */}
             {profile.address && (
               <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Address</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  Address
+                </h2>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-blue-500 mt-1" />
                   <div>
                     <p className="text-gray-900">{profile.address.street}</p>
                     <p className="text-gray-600">
-                      {profile.address.city}, {profile.address.state} {profile.address.zip}
+                      {profile.address.city}, {profile.address.state}{" "}
+                      {profile.address.zip}
                     </p>
                   </div>
                 </div>
@@ -272,12 +329,20 @@ export default function ProfileView() {
           <div className="space-y-6">
             {/* Social Links */}
             <div className="bg-white rounded-xl p-6 shadow-md border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Social Links</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Social Links
+              </h2>
               <div className="flex flex-wrap gap-4">
                 {profile.github && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.github, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.github,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="GitHub"
                   >
@@ -287,7 +352,13 @@ export default function ProfileView() {
                 {profile.linkedin && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.linkedin, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.linkedin,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="LinkedIn"
                   >
@@ -297,7 +368,13 @@ export default function ProfileView() {
                 {profile.facebook && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.facebook, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.facebook,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="Facebook"
                   >
@@ -307,7 +384,13 @@ export default function ProfileView() {
                 {profile.instagram && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.instagram, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.instagram,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="Instagram"
                   >
@@ -317,7 +400,13 @@ export default function ProfileView() {
                 {profile.twitter && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.twitter, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.twitter,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="Twitter"
                   >
@@ -327,7 +416,13 @@ export default function ProfileView() {
                 {profile.portfolio && (
                   <button
                     type="button"
-                    onClick={() => window.open(profile.portfolio, "_blank", "noopener,noreferrer")}
+                    onClick={() =>
+                      window.open(
+                        profile.portfolio,
+                        "_blank",
+                        "noopener,noreferrer"
+                      )
+                    }
                     className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-blue-100 transition-colors"
                     aria-label="Portfolio"
                   >
