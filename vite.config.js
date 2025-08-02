@@ -10,6 +10,10 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+  },
+  esbuild: {
+    target: "es2020",
   },
   server: {
     host: "0.0.0.0",
