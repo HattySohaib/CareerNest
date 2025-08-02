@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash2, Plus } from "lucide-react";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { fetchInternships, deleteInternship } from "../services/InternshipApi";

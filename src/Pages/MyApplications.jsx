@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import MyApplicationCard from "@/components/jobs/MyApplicationCard";
 import ApplicationApi from "../services/ApplicationApi";
 import { useToast } from "../components/common/ToastContext";

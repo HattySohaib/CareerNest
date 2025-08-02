@@ -23,7 +23,7 @@ import {
   Calendar,
 } from "lucide-react";
 import JobCard from "../components/jobs/InternshipCard";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Internships() {
   const [internships, setInternships] = useState([]);
