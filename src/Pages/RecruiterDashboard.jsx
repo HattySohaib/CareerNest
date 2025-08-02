@@ -15,7 +15,7 @@ import {
   Trash2,
   Building,
 } from "lucide-react";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import { Link } from "react-router-dom";
 
 export default function RecruiterDashboard() {

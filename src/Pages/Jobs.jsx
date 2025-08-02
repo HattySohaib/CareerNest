@@ -25,7 +25,7 @@ import {
   Calendar,
 } from "lucide-react";
 import JobCard from "../components/jobs/JobCard";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);

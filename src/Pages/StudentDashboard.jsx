@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import JobCard from "../components/jobs/JobCard";
 import Chatbot from "../components/Chatbot";
 

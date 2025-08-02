@@ -13,7 +13,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { createPageUrl } from "../components/utils";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import ApplicationForm from "../components/jobs/ApplicationForm";
 
 export default function JobDetails() {
